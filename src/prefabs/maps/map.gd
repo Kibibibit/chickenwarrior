@@ -3,9 +3,22 @@ class_name Map
 
 const TILE_SIZE: int = 16
 
+
+
 @onready
 var _unit_parent = $Units
 
+@export_range(0,1)
+var grid_opacity: float = 0.1
+
+var _grid_lines: MapGridLines
+
+func _ready() -> void:
+	_grid_lines = MapGridLines.new(get_used_rect())
+	add_child(_grid_lines)
+
+func map_rect() -> Rect2i:
+	return get_used_rect()
 
 func get_units() -> Array[Unit]:
 	var out: Array[Unit] = []
@@ -17,6 +30,9 @@ func get_units() -> Array[Unit]:
 func get_maptileset() -> MapTileSet:
 	assert(tile_set is MapTileSet, "Tile set must be MapTileSet")
 	return tile_set
+
+func get_tile_name(tile: Vector2i) -> String:
+	return TileTypes.get_tile_name(get_tile_type(tile))
 
 func get_tile_type(tile: Vector2i) -> StringName:
 	if (get_used_rect().has_point(tile)):

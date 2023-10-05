@@ -31,7 +31,25 @@ const TILE_COSTS: Dictionary = {
 	FORT: 1
 }
 
-func get_cost(tile_type: StringName, unit_type: StringName) -> int:
+const TILE_NAMES: Dictionary = {
+	VOID: "???",
+	PLAINS: "Plains",
+	TREES: "Trees",
+	MOUNTAINS: "Mountains",
+	STRONGHOLD: "Stronghold",
+	WATER:"Water",
+	HILLS:"Hills",
+	POISON:"Sludge",
+	BRIDGE:"Bridge",
+	FORT:"Fort"
+}
+
+func get_tile_name(tile_type: StringName) -> String:
+	if not tile_type in TILE_NAMES:
+		tile_type = VOID
+	return TILE_NAMES[tile_type]
+
+func get_cost(tile_type: StringName, unit_type: StringName = UnitTypes.INFANTRY) -> int:
 	var base_cost: int = COST_MAX
 	if (tile_type == VOID):
 		return COST_MAX

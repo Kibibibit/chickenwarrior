@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cn67esf16elva"]
 
-[ext_resource type="Shader" path="res://assets/transparent.gdshader" id="1_klft2"]
+[ext_resource type="Shader" path="res://resources/materials/transparent/transparent.gdshader" id="1_klft2"]
 
 [resource]
 shader = ExtResource("1_klft2")

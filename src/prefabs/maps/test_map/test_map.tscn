@@ -29,9 +29,11 @@ position = Vector2(64, 80)
 character = ExtResource("3_a0t6i")
 tile = Vector2i(4, 5)
 inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("5_rkdrk"), ExtResource("6_m477u")])
+hp = null
 
 [node name="TestBob" parent="Units" instance=ExtResource("2_je2jo")]
 position = Vector2(272, 288)
 character = SubResource("Resource_pp8kf")
 team = 1
 tile = Vector2i(17, 18)
+hp = null

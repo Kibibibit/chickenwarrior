@@ -1,16 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://duhyxcbryx5ow"]
+[gd_scene load_steps=6 format=3 uid="uid://duhyxcbryx5ow"]
 
 [ext_resource type="Script" path="res://src/scenes/battle_scene/battle_scene.gd" id="1_6u23s"]
 [ext_resource type="Script" path="res://src/scripts/objects/tile_highlight.gd" id="2_3cnms"]
 [ext_resource type="PackedScene" uid="uid://bm4bfgp3fbrmf" path="res://src/prefabs/battle_prefabs/cursor/cursor.tscn" id="3_tk60x"]
 [ext_resource type="Script" path="res://src/prefabs/battle_prefabs/cursor/cursor.gd" id="4_7a8hm"]
+[ext_resource type="PackedScene" uid="uid://l8gbi6aspvji" path="res://src/prefabs/ui/battle_ui/battle_ui.tscn" id="5_rl8ka"]
 
 [node name="BattleScene" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_6u23s")
 
+[node name="BattleUI" parent="." instance=ExtResource("5_rl8ka")]
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -576.0
+offset_bottom = -324.0
+
 [node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
 zoom = Vector2(2, 2)
 
 [node name="TileHighlight" type="Node2D" parent="."]

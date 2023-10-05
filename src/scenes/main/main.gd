@@ -10,6 +10,4 @@ func _ready() -> void:
 	var map_scene: Map = test_map_resource.instantiate()
 	battle_scene.map = map_scene
 	
-	print(iron_sword.min_rank)
-	
 	add_child(battle_scene)
