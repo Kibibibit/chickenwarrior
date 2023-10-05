@@ -8,8 +8,6 @@ const TILE_SIZE: int = 16
 @onready
 var _unit_parent = $Units
 
-@export_range(0,1)
-var grid_opacity: float = 0.1
 
 var _grid_lines: MapGridLines
 

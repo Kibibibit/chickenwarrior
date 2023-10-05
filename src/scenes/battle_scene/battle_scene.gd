@@ -61,11 +61,10 @@ func _cursor_moved(tile: Vector2i) -> void:
 			return
 
 func _cursor_action_player_turn_state(_action: int) -> void:
-	print(cursor.tile)
-	print(map.get_tile_name(cursor.tile))
 	var unit: Unit = _unit_at(cursor.tile)
 	if unit != null:
 		print(unit.character.name)
+		print(unit.team)
 
 func _cursor_moved_player_turn_state(tile: Vector2i) -> void:
 	ui.set_tile_type(map.get_tile_type(tile))
