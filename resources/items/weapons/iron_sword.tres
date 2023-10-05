@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://b7kw2prkn2w8b"]
+
+[ext_resource type="Script" path="res://src/scripts/resource_types/weapon.gd" id="1_bbjby"]
+
+[resource]
+script = ExtResource("1_bbjby")
+weapon_type = 0
+base_stat = 0
+might = 5
+hit_chance = 90
+crit_chance = 0
+weight = 20
+min_rank = 0
+attack_count = 1
+min_range = 1
+max_range = 1
+name = "Iron Sword"
+breakable = true
+max_uses = 40

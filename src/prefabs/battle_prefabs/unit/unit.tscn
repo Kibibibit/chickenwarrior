@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://o0io22x7hv0"]
+
+[ext_resource type="Texture2D" uid="uid://dgt4k2yv5er6u" path="res://assets/unit.png" id="1_2ut52"]
+[ext_resource type="Script" path="res://src/prefabs/battle_prefabs/unit/unit.gd" id="2_2len0"]
+
+[node name="Unit" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_2ut52")
+centered = false
+script = ExtResource("2_2len0")
