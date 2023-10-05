@@ -15,8 +15,10 @@ const TEAM_ALLY: int = 2
 
 func _set_character(p_character: Character) -> void:
 	character = p_character
-	hp = character.hp
+	if (Engine.is_editor_hint()):
+		hp = character.hp
 
 func _set_tile(p_tile: Vector2i):
 	tile = p_tile
-	position = tile*Map.TILE_SIZE
+	if (Engine.is_editor_hint()):
+		position = tile*Map.TILE_SIZE
