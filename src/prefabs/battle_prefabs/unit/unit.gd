@@ -15,10 +15,16 @@ const TEAM_ALLY: int = 2
 
 func _set_character(p_character: Character) -> void:
 	character = p_character
-	if (Engine.is_editor_hint()):
+	if (Engine.is_editor_hint() and p_character != null):
 		hp = character.hp
 
 func _set_tile(p_tile: Vector2i):
 	tile = p_tile
 	if (Engine.is_editor_hint()):
 		position = tile*Map.TILE_SIZE
+
+func get_unit_type() -> StringName:
+	return UnitTypes.INFANTRY
+
+func can_use(_item: Item) -> bool:
+	return true

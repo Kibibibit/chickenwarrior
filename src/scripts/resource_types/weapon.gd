@@ -1,3 +1,4 @@
+@tool
 @icon("res://assets/icons/weapon.png")
 extends Item
 class_name Weapon
@@ -16,7 +17,7 @@ const RANK_C: int = 2
 const RANK_B: int = 3
 const RANK_A: int = 4
 
-@export_enum("Sword", "Lance", "Axe") var weapon_type: int
+@export_enum("Sword", "Lance", "Axe", "Bow") var weapon_type: int
 @export_enum("Strength", "Magic", "Dexterity") var base_stat: int
 @export var might: int
 @export_range(0, 100) var hit_chance: int

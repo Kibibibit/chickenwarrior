@@ -3,7 +3,7 @@ class_name MapGridLines
 
 
 var _grid_texture: CompressedTexture2D = preload("res://assets/grid_lines.png")
-var _transparent_material: ShaderMaterial = preload("res://resources/materials/transparent/transparent_material.tres")
+var _transparent_material: ShaderMaterial = preload("res://resources/materials/transparent/transparent_material.tres").duplicate()
 
 var opacity: float = 0.1 : set = _set_opacity
 

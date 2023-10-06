@@ -3,7 +3,8 @@
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_fmeek"]
 
 [resource]
+resource_name = "TestBob"
 script = ExtResource("1_fmeek")
 name = "TestBob"
 hp = 10
-movement = 4
+movement = 5

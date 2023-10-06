@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/scripts/resource_types/item.gd" id="1_g6gd4"]
 
 [resource]
+resource_name = "Vulnerary"
 script = ExtResource("1_g6gd4")
 name = "Vulnerary"
 breakable = true

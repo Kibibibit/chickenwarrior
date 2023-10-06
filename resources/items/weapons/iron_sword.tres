@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/scripts/resource_types/weapon.gd" id="1_bbjby"]
 
 [resource]
+resource_name = "Iron Sword"
 script = ExtResource("1_bbjby")
 weapon_type = 0
 base_stat = 0
