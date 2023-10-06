@@ -26,7 +26,7 @@ const TILE_COSTS: Dictionary = {
 	STRONGHOLD: 1,
 	WATER: COST_MAX,
 	HILLS: 3,
-	POISON: 1,
+	POISON: 2,
 	BRIDGE: 1,
 	FORT: 1
 }

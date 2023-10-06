@@ -51,7 +51,12 @@ func _flood_fill_attack(tile: Vector2i, min_range: int, max_range:int, explored:
 		var current: Vector2i = stack.pop_front()
 		var distance_to_current = distance_map[current]
 		if (distance_to_current <= max_range):
-			if (distance_to_current >= min_range and current != tile and not current in out and not current in explored):
+			if (
+				distance_to_current >= min_range and 
+				current != tile and 
+				not current in out and 
+				not current in explored
+			):
 				out.append(current)
 			for n in NEIGHBOURS:
 				var neighbour: Vector2i = current+n
