@@ -52,11 +52,12 @@ const CORNER_POINTS: Dictionary = {
 var _arrow_texture: CompressedTexture2D = preload("res://assets/arrows.png")
 var _start_point: Vector2i
 var map: Map
+var path: Array[Vector2i]
 
 
 func draw_path(from: Vector2i, to: Vector2i, unit_type: StringName, passable_tiles: Array[Vector2i]) -> void:
-	var path: Array[Vector2i] = _a_star(from, to, unit_type, passable_tiles)
 	_remove_sprites()
+	path = _a_star(from, to, unit_type, passable_tiles)
 	if (path.size() > 1):
 		for i in path.size():
 			var start_tile: bool = i == 0
@@ -94,6 +95,7 @@ func clear_arrows() -> void:
 	_remove_sprites()
 
 func _remove_sprites() -> void:
+	path = []
 	for child in get_children():
 		child.queue_free()
 		remove_child(child)
@@ -129,11 +131,11 @@ func _a_star(start: Vector2i, goal: Vector2i, unit_type: StringName, passable_ti
 	return []
 
 func _get_path(path_map: Dictionary, current: Vector2i) -> Array[Vector2i]:
-	var path: Array[Vector2i] = [current]
+	var out: Array[Vector2i] = [current]
 	while current in path_map.keys():
 		current = path_map[current]
-		path.push_front(current)
-	return path
+		out.push_front(current)
+	return out
 
 func _add_sprite(vector: Vector2i, region: Vector2i) -> void:
 	var sprite: Sprite2D = Sprite2D.new()

@@ -18,6 +18,7 @@ var selected_unit_id: int = Constants.NULL_ID
 var unit_start_pos: Vector2i
 
 var move_tiles: Array[Vector2i]
+var attack_tiles: Array[Vector2i]
 
 @onready
 var camera: Camera2D = $Camera2D
@@ -70,6 +71,7 @@ func _cursor_action(action: int) -> void:
 			return
 
 func _cursor_moved(tile: Vector2i) -> void:
+	ui.set_tile_type(map.get_tile_type(tile))
 	match battle_state:
 		STATE_PLAYER_TURN:
 			_cursor_moved_player_turn_state(tile)
@@ -78,14 +80,25 @@ func _cursor_moved(tile: Vector2i) -> void:
 		_:
 			return
 
+func _select_unit(unit: Unit) -> void:
+	tile_highlight.clear_highlight()
+	move_tiles = tile_highlight.get_move_tiles(unit, unit_positions)
+	attack_tiles = tile_highlight.get_attack_tiles(unit, move_tiles)
+	tile_highlight.highlight_tiles(move_tiles, attack_tiles)
+	selected_unit_id = unit.get_instance_id()
+
+func _deselect_unit() -> void:
+	selected_unit_id = Constants.NULL_ID
+	tile_highlight.clear_highlight()
+	battle_state = STATE_PLAYER_TURN
+	arrows.clear_arrows()
+	move_tiles = []
+	attack_tiles = []
+
 func _cursor_action_player_turn_state(action: int) -> void:
 	var unit: Unit = _unit_at(cursor.tile)
 	if unit != null and action == Cursor.SELECT:
-		tile_highlight.clear_highlight()
-		move_tiles = tile_highlight.get_move_tiles(unit, unit_positions)
-		var attack_tiles = tile_highlight.get_attack_tiles(unit, move_tiles)
-		tile_highlight.highlight_tiles(move_tiles, attack_tiles)
-		selected_unit_id = unit.get_instance_id()
+		_select_unit(unit)
 		if (unit.team == Teams.PLAYER):
 			unit_start_pos = unit.tile
 			battle_state = STATE_PLAYER_UNIT_SELECTED
@@ -97,24 +110,27 @@ func _cursor_action_player_turn_state(action: int) -> void:
 func _cursor_action_player_unit_selected_state(action: int) -> void:
 	var unit: Unit = instance_from_id(selected_unit_id)
 	if action == Cursor.DESELECT:
-		unit.tile = unit_start_pos
-		selected_unit_id = Constants.NULL_ID
-		tile_highlight.clear_highlight()
-		battle_state = STATE_PLAYER_TURN
-		arrows.clear_arrows()
-		move_tiles = []
+		unit.position = unit_start_pos*Map.TILE_SIZE
+		_deselect_unit()
 		return
+	elif action == Cursor.SELECT:
+		unit.position = unit_start_pos*Map.TILE_SIZE
+		unit.path_to(arrows.path)
 		
 func _cursor_action_enemy_unit_selected_state(action: int) -> void:
 	if (action == Cursor.DESELECT):
-		selected_unit_id = Constants.NULL_ID
-		tile_highlight.clear_highlight()
-		battle_state = STATE_PLAYER_TURN
-		move_tiles = []
-		return
+		_deselect_unit()
+	elif (action == Cursor.SELECT):
+		var new_unit: Unit = _unit_at(cursor.tile)
+		if (new_unit != null):
+			_select_unit(new_unit)
+			if (new_unit.team == Teams.PLAYER):
+				battle_state = STATE_PLAYER_UNIT_SELECTED
+		else:
+			_deselect_unit()
+				
 
 func _cursor_moved_player_turn_state(tile: Vector2i) -> void:
-	ui.set_tile_type(map.get_tile_type(tile))
 	ui.set_unit(_unit_at(tile))
 
 func _cursor_moved_player_unit_selected_state(tile: Vector2i) -> void:
