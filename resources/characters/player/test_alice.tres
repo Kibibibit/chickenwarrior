@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Character" load_steps=2 format=3 uid="uid://de2cga6x2e5cr"]
+
+[ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_xq0eu"]
+
+[resource]
+resource_name = "TestAlice"
+script = ExtResource("1_xq0eu")
+name = "TestAlice"
+hp = 4
+movement = 5

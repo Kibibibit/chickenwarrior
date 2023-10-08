@@ -54,8 +54,8 @@ var _start_point: Vector2i
 var map: Map
 
 
-func draw_path(from: Vector2i, to: Vector2i, unit_type: StringName, move_tiles: Array[Vector2i]) -> void:
-	var path: Array[Vector2i] = _a_star(from, to, unit_type, move_tiles)
+func draw_path(from: Vector2i, to: Vector2i, unit_type: StringName, passable_tiles: Array[Vector2i]) -> void:
+	var path: Array[Vector2i] = _a_star(from, to, unit_type, passable_tiles)
 	_remove_sprites()
 	if (path.size() > 1):
 		for i in path.size():
@@ -98,7 +98,7 @@ func _remove_sprites() -> void:
 		child.queue_free()
 		remove_child(child)
 
-func _a_star(start: Vector2i, goal: Vector2i, unit_type: StringName, move_tiles: Array[Vector2i]) -> Array[Vector2i]:
+func _a_star(start: Vector2i, goal: Vector2i, unit_type: StringName, passable_tiles: Array[Vector2i]) -> Array[Vector2i]:
 	var queue: PriorityQueue = PriorityQueue.new()
 	var path_map: Dictionary = {}
 	var g_scores: Dictionary = {}
@@ -114,10 +114,11 @@ func _a_star(start: Vector2i, goal: Vector2i, unit_type: StringName, move_tiles:
 			g_scores[current] = INF
 		for n in VectorUtils.NEIGHBOURS:
 			var neighbour: Vector2i = current+n
-			if (not neighbour in move_tiles):
+			if not neighbour in passable_tiles:
 				continue
 			if not neighbour in g_scores:
 				g_scores[neighbour] = INF
+			
 				
 			var new_g_score = g_scores[current] + map.get_tile_cost(neighbour, unit_type)
 			if (new_g_score < g_scores[neighbour]):

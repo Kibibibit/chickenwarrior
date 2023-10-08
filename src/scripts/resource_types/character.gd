@@ -3,7 +3,7 @@
 extends Resource
 class_name Character
 
-@export var name: String
+@export var name: String : set = _set_name
 
 @export_group("Stats")
 @export var hp: int

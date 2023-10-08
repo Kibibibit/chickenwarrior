@@ -64,6 +64,8 @@ func _cursor_action(action: int) -> void:
 			_cursor_action_player_turn_state(action)
 		STATE_PLAYER_UNIT_SELECTED:
 			_cursor_action_player_unit_selected_state(action)
+		STATE_ENEMY_UNIT_SELECTED:
+			_cursor_action_enemy_unit_selected_state(action)
 		_:
 			return
 
@@ -80,13 +82,17 @@ func _cursor_action_player_turn_state(action: int) -> void:
 	var unit: Unit = _unit_at(cursor.tile)
 	if unit != null and action == Cursor.SELECT:
 		tile_highlight.clear_highlight()
-		move_tiles = tile_highlight.get_move_tiles(unit)
+		move_tiles = tile_highlight.get_move_tiles(unit, unit_positions)
 		var attack_tiles = tile_highlight.get_attack_tiles(unit, move_tiles)
 		tile_highlight.highlight_tiles(move_tiles, attack_tiles)
 		selected_unit_id = unit.get_instance_id()
-		unit_start_pos = unit.tile
-		battle_state = STATE_PLAYER_UNIT_SELECTED
-		return
+		if (unit.team == Teams.PLAYER):
+			unit_start_pos = unit.tile
+			battle_state = STATE_PLAYER_UNIT_SELECTED
+			return
+		else:
+			battle_state = STATE_ENEMY_UNIT_SELECTED
+			return
 
 func _cursor_action_player_unit_selected_state(action: int) -> void:
 	var unit: Unit = instance_from_id(selected_unit_id)
@@ -98,6 +104,14 @@ func _cursor_action_player_unit_selected_state(action: int) -> void:
 		arrows.clear_arrows()
 		move_tiles = []
 		return
+		
+func _cursor_action_enemy_unit_selected_state(action: int) -> void:
+	if (action == Cursor.DESELECT):
+		selected_unit_id = Constants.NULL_ID
+		tile_highlight.clear_highlight()
+		battle_state = STATE_PLAYER_TURN
+		move_tiles = []
+		return
 
 func _cursor_moved_player_turn_state(tile: Vector2i) -> void:
 	ui.set_tile_type(map.get_tile_type(tile))
@@ -105,5 +119,13 @@ func _cursor_moved_player_turn_state(tile: Vector2i) -> void:
 
 func _cursor_moved_player_unit_selected_state(tile: Vector2i) -> void:
 	var unit: Unit = instance_from_id(selected_unit_id)
-	arrows.draw_path(unit.tile, tile, unit.get_unit_type(), move_tiles)
+	if (tile in move_tiles and tile != unit.tile):
+		var passable_tiles: Array[Vector2i] = move_tiles
+		for unit_tile in unit_positions.keys():
+			if (_unit_at(unit_tile).team == unit.team):
+				passable_tiles.append(unit_tile)
+		if (_unit_at(tile) == null):
+			arrows.draw_path(unit.tile, tile, unit.get_unit_type(), passable_tiles)
+	elif (tile == unit.tile):
+		arrows.clear_arrows()
 

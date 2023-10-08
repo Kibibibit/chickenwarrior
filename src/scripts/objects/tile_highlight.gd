@@ -10,7 +10,7 @@ var get_cost_callback: Callable
 var _move_region: Rect2i = Rect2i(0,Map.TILE_SIZE,Map.TILE_SIZE, Map.TILE_SIZE)
 var _attack_region: Rect2i = Rect2i(Map.TILE_SIZE*2,Map.TILE_SIZE,Map.TILE_SIZE, Map.TILE_SIZE)
 
-func get_move_tiles(unit: Unit) -> Array[Vector2i]:
+func get_move_tiles(unit: Unit, unit_positions: Dictionary) -> Array[Vector2i]:
 	var cost_map: Dictionary = {
 		unit.tile: 0
 	}
@@ -22,18 +22,28 @@ func get_move_tiles(unit: Unit) -> Array[Vector2i]:
 		var cost_to_current: int = cost_map[current]
 		
 		if (cost_to_current <= unit.character.movement):
-			if (current != unit.tile and not current in out):
+			if (
+				current != unit.tile and 
+				not current in out and 
+				not current in unit_positions
+			):
 				out.append(current)
 			for n in VectorUtils.NEIGHBOURS:
 				var neighbour: Vector2i = current+n
 				if (map.get_used_rect().has_point(neighbour)):
-					var cost: int = cost_to_current + map.get_tile_cost(neighbour, unit.get_unit_type())
-					if (not neighbour in cost_map):
-						cost_map[neighbour] = cost
-						stack.push_back(neighbour)
-					elif (cost_map[neighbour] > cost):
-						cost_map[neighbour] = cost
-						stack.push_back(neighbour)
+					var unit_at_neighbour: bool = neighbour in unit_positions
+					var can_pass_tile: bool = not unit_at_neighbour
+					if (unit_at_neighbour):
+						var mounted: bool = unit.get_unit_type() == UnitTypes.CAVALRY or unit.get_unit_type() == UnitTypes.FLIER
+						can_pass_tile = mounted or instance_from_id(unit_positions[neighbour]).team == unit.team
+					if (can_pass_tile):
+						var cost: int = cost_to_current + map.get_tile_cost(neighbour, unit.get_unit_type())
+						if (not neighbour in cost_map):
+							cost_map[neighbour] = cost
+							stack.push_back(neighbour)
+						elif (cost_map[neighbour] > cost):
+							cost_map[neighbour] = cost
+							stack.push_back(neighbour)
 	return out
 
 func _flood_fill_attack(tile: Vector2i, min_range: int, max_range:int, explored:Array[Vector2i]) -> Array[Vector2i]:

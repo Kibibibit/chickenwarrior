@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b8qe7ek7xcaq5"]
+[gd_scene load_steps=11 format=3 uid="uid://b8qe7ek7xcaq5"]
 
 [ext_resource type="TileSet" uid="uid://dxvy85xtp5bhc" path="res://resources/tilesets/test_map_tileset.tres" id="1_ne74p"]
 [ext_resource type="Script" path="res://src/prefabs/maps/map.gd" id="2_h3isd"]
@@ -8,6 +8,8 @@
 [ext_resource type="Resource" uid="uid://ow13aatsj02g" path="res://resources/items/vulnerary.tres" id="6_m477u"]
 [ext_resource type="Resource" uid="uid://dg4m15bcawron" path="res://resources/characters/enemy/test_bob.tres" id="7_x2vwp"]
 [ext_resource type="Resource" uid="uid://bitdfqkohrmcj" path="res://resources/items/weapons/iron_bow.tres" id="8_5ka5x"]
+[ext_resource type="Resource" uid="uid://de2cga6x2e5cr" path="res://resources/characters/player/test_alice.tres" id="9_h38tm"]
+[ext_resource type="Resource" uid="uid://wsm0q68n174f" path="res://resources/characters/enemy/test_lisa.tres" id="10_cg0gy"]
 
 [node name="Map" type="TileMap"]
 z_index = -1
@@ -33,3 +35,16 @@ team = 1
 tile = Vector2i(17, 18)
 inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("8_5ka5x")])
 hp = 10
+
+[node name="TestAlice" parent="Units" instance=ExtResource("2_je2jo")]
+position = Vector2(96, 80)
+character = ExtResource("9_h38tm")
+tile = Vector2i(6, 5)
+hp = 4
+
+[node name="TestLisa" parent="Units" instance=ExtResource("2_je2jo")]
+position = Vector2(112, 80)
+character = ExtResource("10_cg0gy")
+team = 1
+tile = Vector2i(7, 5)
+hp = 5
