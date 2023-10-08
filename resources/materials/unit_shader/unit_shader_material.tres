@@ -4,4 +4,5 @@
 
 [resource]
 shader = ExtResource("1_2m50t")
-shader_parameter/player = false
+shader_parameter/player = null
+shader_parameter/moved = false
