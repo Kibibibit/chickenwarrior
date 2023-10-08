@@ -17,6 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Constants="*res://src/scripts/autoloads/constants.gd"
+VectorUtils="*res://src/scripts/autoloads/vector_utils.gd"
 UnitTypes="*res://src/scripts/autoloads/unit_types.gd"
 TileTypes="*res://src/scripts/autoloads/tile_types.gd"
 

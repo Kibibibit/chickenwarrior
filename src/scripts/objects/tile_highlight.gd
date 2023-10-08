@@ -1,12 +1,6 @@
 extends Node2D
 class_name TileHighlight
 
-const NEIGHBOURS: Array[Vector2i] = [
-	Vector2i.UP,
-	Vector2i.DOWN,
-	Vector2i.LEFT,
-	Vector2i.RIGHT
-]
 
 var map: Map
 var _map_icons_texture: CompressedTexture2D = preload("res://assets/map_icons.png")
@@ -30,7 +24,7 @@ func get_move_tiles(unit: Unit) -> Array[Vector2i]:
 		if (cost_to_current <= unit.character.movement):
 			if (current != unit.tile and not current in out):
 				out.append(current)
-			for n in NEIGHBOURS:
+			for n in VectorUtils.NEIGHBOURS:
 				var neighbour: Vector2i = current+n
 				if (map.get_used_rect().has_point(neighbour)):
 					var cost: int = cost_to_current + map.get_tile_cost(neighbour, unit.get_unit_type())
@@ -58,7 +52,7 @@ func _flood_fill_attack(tile: Vector2i, min_range: int, max_range:int, explored:
 				not current in explored
 			):
 				out.append(current)
-			for n in NEIGHBOURS:
+			for n in VectorUtils.NEIGHBOURS:
 				var neighbour: Vector2i = current+n
 				if (map.get_used_rect().has_point(neighbour)):
 					var distance: int = distance_to_current + 1
