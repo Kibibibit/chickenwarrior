@@ -3,6 +3,7 @@ class_name Cursor
 
 const SELECT: int = 0
 const DESELECT: int = 1
+const CURSOR_SPEED: int = 350
 
 signal cursor_moved(tile: Vector2i)
 signal cursor_action(action_type: int)
@@ -24,13 +25,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (event is InputEventMouseMotion):
 		var vector: Vector2i = _floor_position(get_global_mouse_position())
 		_update_mouse_used(true)
-		_update_position(vector)
+		_update_position(vector, true)
 	
 	for action in _input_dictionary:
 		var direction: Vector2i = _input_dictionary[action]
 		if (Input.is_action_pressed(action)):
 			_update_mouse_used(false)
-			_update_position(tile+direction)
+			_update_position(tile+direction, false)
 			break
 	
 	var clicked: int = -1
@@ -46,11 +47,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif (Input.is_action_just_pressed("ui_text_backspace") or clicked == DESELECT):
 		cursor_action.emit(DESELECT)
 
-func _update_position(new_tile: Vector2i):
+func _update_position(new_tile: Vector2i, used_mouse: bool):
 	if (map_rect.has_point(new_tile)):
 		if (new_tile != tile):
 			tile = new_tile
-			position = tile*Map.TILE_SIZE
+			if (used_mouse):
+				position = new_tile*Map.TILE_SIZE
 			cursor_moved.emit(tile)
 
 func _floor_position(vector: Vector2) -> Vector2i:
@@ -63,3 +65,7 @@ func _update_mouse_used(using_mouse: bool)->void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
+func _process(delta: float) -> void:
+	position.x = move_toward(position.x, tile.x * Map.TILE_SIZE, delta*CURSOR_SPEED)
+	position.y = move_toward(position.y, tile.y * Map.TILE_SIZE, delta*CURSOR_SPEED)

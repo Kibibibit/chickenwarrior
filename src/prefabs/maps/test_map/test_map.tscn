@@ -1,15 +1,36 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8qe7ek7xcaq5"]
+[gd_scene load_steps=16 format=3 uid="uid://b8qe7ek7xcaq5"]
 
 [ext_resource type="TileSet" uid="uid://dxvy85xtp5bhc" path="res://resources/tilesets/test_map_tileset.tres" id="1_ne74p"]
 [ext_resource type="Script" path="res://src/prefabs/maps/map.gd" id="2_h3isd"]
 [ext_resource type="PackedScene" uid="uid://o0io22x7hv0" path="res://src/prefabs/battle_prefabs/unit/unit.tscn" id="2_je2jo"]
 [ext_resource type="Resource" uid="uid://cuknc7mc3uewy" path="res://resources/characters/player/test_steve.tres" id="3_a0t6i"]
+[ext_resource type="Shader" path="res://resources/materials/unit_shader/unit_shader.gdshader" id="4_84i1k"]
 [ext_resource type="Resource" uid="uid://b7kw2prkn2w8b" path="res://resources/items/weapons/iron_sword.tres" id="5_rkdrk"]
 [ext_resource type="Resource" uid="uid://ow13aatsj02g" path="res://resources/items/vulnerary.tres" id="6_m477u"]
 [ext_resource type="Resource" uid="uid://dg4m15bcawron" path="res://resources/characters/enemy/test_bob.tres" id="7_x2vwp"]
 [ext_resource type="Resource" uid="uid://bitdfqkohrmcj" path="res://resources/items/weapons/iron_bow.tres" id="8_5ka5x"]
 [ext_resource type="Resource" uid="uid://de2cga6x2e5cr" path="res://resources/characters/player/test_alice.tres" id="9_h38tm"]
 [ext_resource type="Resource" uid="uid://wsm0q68n174f" path="res://resources/characters/enemy/test_lisa.tres" id="10_cg0gy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p1d8f"]
+shader = ExtResource("4_84i1k")
+shader_parameter/player = 0
+shader_parameter/moved = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_slqm8"]
+shader = ExtResource("4_84i1k")
+shader_parameter/player = 1
+shader_parameter/moved = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h4lac"]
+shader = ExtResource("4_84i1k")
+shader_parameter/player = 0
+shader_parameter/moved = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ed8n0"]
+shader = ExtResource("4_84i1k")
+shader_parameter/player = 1
+shader_parameter/moved = false
 
 [node name="Map" type="TileMap"]
 z_index = -1
@@ -20,8 +41,10 @@ layer_0/tile_data = PackedInt32Array(0, 262144, 0, 65536, 262144, 0, 131072, 262
 script = ExtResource("2_h3isd")
 
 [node name="Units" type="Node2D" parent="."]
+z_index = 10
 
 [node name="TestSteve" parent="Units" instance=ExtResource("2_je2jo")]
+material = SubResource("ShaderMaterial_p1d8f")
 position = Vector2(64, 80)
 character = ExtResource("3_a0t6i")
 tile = Vector2i(4, 5)
@@ -29,6 +52,7 @@ inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtReso
 hp = 19
 
 [node name="TestBob" parent="Units" instance=ExtResource("2_je2jo")]
+material = SubResource("ShaderMaterial_slqm8")
 position = Vector2(272, 288)
 character = ExtResource("7_x2vwp")
 team = 1
@@ -37,12 +61,14 @@ inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtReso
 hp = 10
 
 [node name="TestAlice" parent="Units" instance=ExtResource("2_je2jo")]
+material = SubResource("ShaderMaterial_h4lac")
 position = Vector2(96, 80)
 character = ExtResource("9_h38tm")
 tile = Vector2i(6, 5)
 hp = 4
 
 [node name="TestLisa" parent="Units" instance=ExtResource("2_je2jo")]
+material = SubResource("ShaderMaterial_ed8n0")
 position = Vector2(112, 80)
 character = ExtResource("10_cg0gy")
 team = 1
