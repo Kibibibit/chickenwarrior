@@ -22,7 +22,7 @@ func _action_selected(action: int):
 	action_selected.emit(action)
 
 func show_action_list(unit:Unit, valid_actions: Array[int]) -> void:
-	action_list.position = unit.get_screen_transform().origin+Vector2(Map.TILE_SIZE, 0)
+	action_list.position = unit.get_screen_transform().origin+Vector2(Map.TILE_SIZE, 0)*unit.get_screen_transform().get_scale().x
 	action_list.show_actions(valid_actions)
 
 func hide_action_list() -> void:
