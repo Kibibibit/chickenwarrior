@@ -58,4 +58,3 @@ text = "Character:
 Movement:"
 
 [node name="ActionList" parent="CanvasLayer" instance=ExtResource("2_yiimy")]
-visible = false

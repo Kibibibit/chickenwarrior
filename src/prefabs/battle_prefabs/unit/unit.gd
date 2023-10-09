@@ -65,7 +65,7 @@ func can_use(_item: Item) -> bool:
 	return true
 
 func path_to(path: Array[Vector2i]) -> void:
-	_path = path
+	_path = path.duplicate()
 
 func get_valid_actions(new_tile: Vector2i, attack_tiles: Array[Vector2i], unit_positions: Dictionary) -> Array[int]:
 	var out: Array[int] = []

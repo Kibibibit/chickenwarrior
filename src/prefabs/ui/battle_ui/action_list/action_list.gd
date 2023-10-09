@@ -6,6 +6,7 @@ signal action_selected(action: int)
 @onready
 var _vbox: VBoxContainer = $VBoxContainer
 
+
 var actions: Array[int] = []
 
 func _clear_actions() -> void:
@@ -21,8 +22,9 @@ func show_actions(p_actions: Array[int]) -> void:
 		_add_action(action, focused)
 		if (not focused):
 			focused = true
-		
+	
 	visible = true
+	
 
 func hide_actions() -> void:
 	_clear_actions()
