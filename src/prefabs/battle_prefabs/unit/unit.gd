@@ -3,6 +3,7 @@
 extends Sprite2D
 class_name Unit
 
+const ACTION_NONE: int = -1
 const ACTION_ARMS: int = 0
 const ACTION_ATTACK: int = 1
 const ACTION_ASSIST: int = 2

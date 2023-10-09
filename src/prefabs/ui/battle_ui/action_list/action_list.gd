@@ -38,3 +38,12 @@ func _add_action(action: int, focused:bool) -> void:
 	_vbox.add_child(button)
 	if (not focused):
 		button.grab_focus()
+
+func _unhandled_input(event):
+	if (not visible):
+		return
+	if (event is InputEventMouseButton):
+		if (event.pressed and event.button_index == MOUSE_BUTTON_RIGHT):
+			_action_selected(Unit.ACTION_NONE)
+	if (Input.is_action_just_pressed("ui_text_backspace")):
+		_action_selected(Unit.ACTION_NONE)

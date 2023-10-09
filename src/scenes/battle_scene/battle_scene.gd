@@ -106,6 +106,11 @@ func _deselect_unit(unit: Unit) -> void:
 
 func _action_selected(action: int) -> void:
 	var unit: Unit = _selected_unit()
+	if (action == Unit.ACTION_NONE):
+		ui.hide_action_list()
+		cursor.can_move = true
+		unit.position = unit_start_pos*Map.TILE_SIZE
+		battle_state = STATE_PLAYER_UNIT_SELECTED
 	if (action == Unit.ACTION_WAIT):
 		ui.hide_action_list()
 		_move_unit(unit)
@@ -133,7 +138,7 @@ func _cursor_action_player_turn_state(action: int) -> void:
 				return
 
 func _cursor_action_player_unit_selected_state(action: int) -> void:
-	var unit: Unit = instance_from_id(selected_unit_id)
+	var unit: Unit = _selected_unit()
 	if action == Cursor.DESELECT:
 		unit.position = unit_start_pos*Map.TILE_SIZE
 		_deselect_unit(unit)
