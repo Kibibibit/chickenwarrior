@@ -86,14 +86,9 @@ func _add_sprite(tile: Vector2i, region: Rect2i) -> void:
 	add_child(sprite)
 
 func get_attack_tiles(unit: Unit, move_tiles: Array[Vector2i]) -> Array[Vector2i]:
-	var min_range:int = -1
-	var max_range:int = -1
-	for item in unit.inventory:
-		if (item is Weapon and unit.can_use(item)):
-			if (item.min_range < min_range or min_range == -1):
-				min_range = item.min_range
-			if (item.max_range > max_range or max_range == -1):
-				max_range = item.max_range
+	var ranges: Vector2i = unit.get_weapon_ranges()
+	var min_range:int = ranges.x
+	var max_range:int = ranges.y
 	var out: Array[Vector2i] = []
 	var tiles: Array[Vector2i] = []
 	tiles.append_array(move_tiles)

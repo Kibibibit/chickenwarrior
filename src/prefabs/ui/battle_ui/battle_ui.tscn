@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://l8gbi6aspvji"]
+[gd_scene load_steps=3 format=3 uid="uid://l8gbi6aspvji"]
 
 [ext_resource type="Script" path="res://src/prefabs/ui/battle_ui/battle_ui.gd" id="1_kgwju"]
+[ext_resource type="PackedScene" uid="uid://bhmvrl21fsmos" path="res://src/prefabs/ui/battle_ui/action_list/action_list.tscn" id="2_yiimy"]
 
 [node name="BattleUI" type="Control"]
 layout_mode = 3
@@ -16,7 +17,7 @@ script = ExtResource("1_kgwju")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="InfoTiles" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,13 +26,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="TilePanel" type="Panel" parent="CanvasLayer/Control"]
+[node name="TilePanel" type="Panel" parent="CanvasLayer/InfoTiles"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.2
 anchor_bottom = 0.1
 
-[node name="TileLabel" type="Label" parent="CanvasLayer/Control/TilePanel"]
+[node name="TileLabel" type="Label" parent="CanvasLayer/InfoTiles/TilePanel"]
 layout_mode = 0
 offset_left = 4.34
 offset_right = 44.34
@@ -39,7 +40,7 @@ offset_bottom = 52.0
 text = "Tile:
 Cost:"
 
-[node name="UnitPanel" type="Panel" parent="CanvasLayer/Control"]
+[node name="UnitPanel" type="Panel" parent="CanvasLayer/InfoTiles"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.8
@@ -47,7 +48,7 @@ anchor_top = 0.9
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="UnitLabel" type="Label" parent="CanvasLayer/Control/UnitPanel"]
+[node name="UnitLabel" type="Label" parent="CanvasLayer/InfoTiles/UnitPanel"]
 layout_mode = 0
 offset_left = 2.61
 offset_top = 5.19
@@ -55,3 +56,6 @@ offset_right = 90.61
 offset_bottom = 57.19
 text = "Character:
 Movement:"
+
+[node name="ActionList" parent="CanvasLayer" instance=ExtResource("2_yiimy")]
+visible = false

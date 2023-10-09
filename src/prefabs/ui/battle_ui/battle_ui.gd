@@ -2,17 +2,31 @@ extends Control
 class_name BattleUI
 
 @onready
-var tile_panel: Panel = $CanvasLayer/Control/TilePanel
+var tile_panel: Panel = $CanvasLayer/InfoTiles/TilePanel
 @onready
-var tile_label: Label = $CanvasLayer/Control/TilePanel/TileLabel
+var tile_label: Label = $CanvasLayer/InfoTiles/TilePanel/TileLabel
 @onready
-var unit_panel: Panel = $CanvasLayer/Control/UnitPanel
+var unit_panel: Panel = $CanvasLayer/InfoTiles/UnitPanel
 @onready
-var unit_label: Label = $CanvasLayer/Control/UnitPanel/UnitLabel
+var unit_label: Label = $CanvasLayer/InfoTiles/UnitPanel/UnitLabel
 
+@onready
+var action_list: ActionList = $CanvasLayer/ActionList
 
+signal action_selected(action: int)
 
+func _ready() -> void:
+	action_list.action_selected.connect(_action_selected)
 
+func _action_selected(action: int):
+	action_selected.emit(action)
+
+func show_action_list(unit:Unit, valid_actions: Array[int]) -> void:
+	action_list.position = unit.get_screen_transform().origin+Vector2(Map.TILE_SIZE, 0)
+	action_list.show_actions(valid_actions)
+
+func hide_action_list() -> void:
+	action_list.hide_actions()
 
 func set_tile_type(tile_type: StringName) -> void:
 	if (tile_type == TileTypes.VOID):
