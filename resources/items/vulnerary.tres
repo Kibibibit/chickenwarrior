@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://ow13aatsj02g"]
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://ow13aatsj02g"]
 
 [ext_resource type="Script" path="res://src/scripts/resource_types/item.gd" id="1_g6gd4"]
+[ext_resource type="Texture2D" uid="uid://5jrxdx20spfo" path="res://assets/icons/item.png" id="1_khue8"]
 
 [resource]
 resource_name = "Vulnerary"
@@ -8,3 +9,4 @@ script = ExtResource("1_g6gd4")
 name = "Vulnerary"
 breakable = true
 max_uses = 3
+icon = ExtResource("1_khue8")

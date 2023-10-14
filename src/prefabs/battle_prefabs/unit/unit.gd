@@ -124,4 +124,9 @@ func _process(delta) -> void:
 			position.y = move_toward(position.y, next_pos.y, delta*UNIT_MOVE_SPEED)
 		else:
 			move_finished.emit()
-		
+
+static func get_action_label(action_code: int) -> String:
+	if (action_code in ACTION_MAP):
+		return ACTION_MAP[action_code]
+	else:
+		return "???"

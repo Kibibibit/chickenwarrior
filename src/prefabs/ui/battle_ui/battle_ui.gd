@@ -13,20 +13,10 @@ var unit_label: Label = $CanvasLayer/InfoTiles/UnitPanel/UnitLabel
 @onready
 var action_list: ActionList = $CanvasLayer/ActionList
 
-signal action_selected(action: int)
 
-func _ready() -> void:
-	action_list.action_selected.connect(_action_selected)
 
-func _action_selected(action: int):
-	action_selected.emit(action)
-
-func show_action_list(unit:Unit, valid_actions: Array[int]) -> void:
-	action_list.position = unit.get_screen_transform().origin+Vector2(Map.TILE_SIZE, 0)*unit.get_screen_transform().get_scale().x
-	action_list.show_actions(valid_actions)
-
-func hide_action_list() -> void:
-	action_list.hide_actions()
+func show_action_list(valid_actions: Array[int]) -> int:
+	return await action_list.show_actions(valid_actions)
 
 func set_tile_type(tile_type: StringName) -> void:
 	if (tile_type == TileTypes.VOID):

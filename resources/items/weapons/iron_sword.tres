@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://b7kw2prkn2w8b"]
+[gd_resource type="Resource" script_class="Weapon" load_steps=3 format=3 uid="uid://b7kw2prkn2w8b"]
 
 [ext_resource type="Script" path="res://src/scripts/resource_types/weapon.gd" id="1_bbjby"]
+[ext_resource type="Texture2D" uid="uid://bk87y5ogqdh7d" path="res://assets/icons/weapon.png" id="1_c5kju"]
 
 [resource]
 resource_name = "Iron Sword"
@@ -18,3 +19,4 @@ max_range = 1
 name = "Iron Sword"
 breakable = true
 max_uses = 40
+icon = ExtResource("1_c5kju")

@@ -48,8 +48,6 @@ func _ready() -> void:
 	camera.position = Vector2(map.map_rect().position) + map.map_rect().size*Map.TILE_SIZE*0.5
 	tile_highlight.map = map
 	arrows.map = map
-	ui.action_selected.connect(_action_selected)
-	
 	
 	for unit in map.get_units():
 		units[unit.get_instance_id()] = unit
@@ -106,17 +104,19 @@ func _deselect_unit(unit: Unit) -> void:
 
 func _action_selected(action: int) -> void:
 	var unit: Unit = _selected_unit()
-	if (action == Unit.ACTION_NONE):
-		ui.hide_action_list()
-		cursor.can_move = true
-		unit.position = unit_start_pos*Map.TILE_SIZE
-		battle_state = STATE_PLAYER_UNIT_SELECTED
+	
 	if (action == Unit.ACTION_WAIT):
-		ui.hide_action_list()
 		_move_unit(unit)
 		cursor.can_move = true
 		_deselect_unit(unit)
 		battle_state = STATE_PLAYER_TURN
+	
+	else:
+		if (action != Unit.ACTION_NONE):
+			print("Unrecognised action %s (%s)" % [action, Unit.get_action_label(action)])
+		cursor.can_move = true
+		unit.position = unit_start_pos*Map.TILE_SIZE
+		battle_state = STATE_PLAYER_UNIT_SELECTED
 
 func _move_unit(unit: Unit) -> void:
 	unit_positions.erase(unit.tile)
@@ -150,7 +150,8 @@ func _cursor_action_player_unit_selected_state(action: int) -> void:
 		
 
 func _unit_move_finished(unit: Unit) -> void:
-	ui.show_action_list(unit, unit.get_valid_actions(cursor.tile, attack_tiles, unit_positions))
+	var action: int = await ui.show_action_list(unit.get_valid_actions(cursor.tile, attack_tiles, unit_positions))
+	_action_selected(action)
 
 
 func _cursor_action_enemy_unit_selected_state(action: int) -> void:
