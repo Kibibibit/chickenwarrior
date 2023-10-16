@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=3 format=3 uid="uid://1xnrh07s71ig"]
+
+[ext_resource type="Script" path="res://src/scripts/resource_types/weapon.gd" id="1_h6xxm"]
+[ext_resource type="Texture2D" uid="uid://08rhtar1j0n" path="res://assets/icons/axe.png" id="1_lccqi"]
+
+[resource]
+resource_name = "Iron Axe"
+script = ExtResource("1_h6xxm")
+weapon_type = 2
+base_stat = 0
+might = 8
+hit_chance = 70
+crit_chance = 0
+weight = 7
+min_rank = 0
+attack_count = 1
+min_range = 1
+max_range = 1
+name = "Iron Axe"
+breakable = true
+max_uses = 45
+icon = ExtResource("1_lccqi")
