@@ -7,6 +7,10 @@ signal action_selected(action: int)
 var _vbox: VBoxContainer = $VBoxContainer
 
 
+var is_focus: bool = false
+var do_refocus: bool = false
+
+
 var actions: Array[int] = []
 
 func _ready() -> void:
@@ -42,15 +46,25 @@ func _add_action(action: int, focused:bool) -> void:
 	var button: Button = Button.new()
 	button.text = Unit.get_action_label(action)
 	button.button_up.connect(_action_selected.bind(action))
+	button.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
 	_vbox.add_child(button)
 	if (not focused):
 		button.grab_focus()
 
+func _process(_delta):
+	if (visible and not is_focus):
+		do_refocus = true
+	elif (do_refocus and visible and not is_focus):
+		is_focus = true
+	elif (not visible):
+		do_refocus = false
+		is_focus = false
+
 func _unhandled_input(event):
-	if (not visible):
+	if (not visible or not is_focus):
 		return
 	if (event is InputEventMouseButton):
 		if (event.pressed and event.button_index == MOUSE_BUTTON_RIGHT):
 			_action_selected(Unit.ACTION_NONE)
-	if (Input.is_action_just_pressed("ui_text_backspace")):
+	if (Input.is_action_just_released("ui_text_backspace")):
 		_action_selected(Unit.ACTION_NONE)

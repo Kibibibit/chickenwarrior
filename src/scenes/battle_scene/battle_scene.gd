@@ -110,7 +110,14 @@ func _action_selected(action: int) -> void:
 		cursor.can_move = true
 		_deselect_unit(unit)
 		battle_state = STATE_PLAYER_TURN
-	
+	elif (action == Unit.ACTION_ATTACK):
+		var weapon: Weapon = await ui.show_weapon_list(unit)
+		if (weapon == null):
+			_unit_move_finished(unit)
+			return
+		else:
+			print(weapon.name)
+
 	else:
 		if (action != Unit.ACTION_NONE):
 			print("Unrecognised action %s (%s)" % [action, Unit.get_action_label(action)])

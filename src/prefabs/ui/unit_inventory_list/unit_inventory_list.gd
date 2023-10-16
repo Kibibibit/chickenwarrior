@@ -9,12 +9,13 @@ var _vbox: VBoxContainer = $VBoxContainer
 
 
 var items: Array[Item] = []
+var is_focus: bool = false
+var do_refocus: bool = false
 
 func _ready() -> void:
 	for child in _vbox.get_children():
 		child.queue_free()
 		_vbox.remove_child(child)
-
 
 
 func _clear_items() -> void:
@@ -45,15 +46,26 @@ func _add_item(item: Item, focused:bool) -> void:
 	button.text = item.name
 	button.icon = item.icon
 	button.button_up.connect(_item_selected.bind(item))
+	button.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
 	_vbox.add_child(button)
 	if (not focused):
 		button.grab_focus()
 
+func _process(_delta):
+	if (visible and not is_focus):
+		do_refocus = true
+	elif (do_refocus and visible and not is_focus):
+		is_focus = true
+	elif (not visible):
+		do_refocus = false
+		is_focus = false
+
 func _unhandled_input(event):
-	if (not visible):
+	if (not visible or not is_focus):
 		return
 	if (event is InputEventMouseButton):
 		if (event.pressed and event.button_index == MOUSE_BUTTON_RIGHT):
 			_item_selected(null)
-	if (Input.is_action_just_pressed("ui_text_backspace")):
+	if (Input.is_action_just_released("ui_text_backspace")):
 		_item_selected(null)
+		

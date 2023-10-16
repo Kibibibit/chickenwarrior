@@ -42,9 +42,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif(event.button_index == MOUSE_BUTTON_RIGHT):
 				clicked = DESELECT
 	
-	if (Input.is_action_just_pressed("ui_accept") or clicked == SELECT):
+	if (Input.is_action_just_released("ui_accept") or clicked == SELECT):
 		cursor_action.emit(SELECT)
-	elif (Input.is_action_just_pressed("ui_text_backspace") or clicked == DESELECT):
+	elif (Input.is_action_just_released("ui_text_backspace") or clicked == DESELECT):
 		cursor_action.emit(DESELECT)
 
 func _update_position(new_tile: Vector2i, used_mouse: bool):
