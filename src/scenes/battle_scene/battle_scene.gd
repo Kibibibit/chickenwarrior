@@ -167,7 +167,7 @@ func _cursor_action_enemy_unit_selected_state(action: int) -> void:
 		_deselect_unit(unit)
 	elif (action == Cursor.SELECT):
 		var new_unit: Unit = _unit_at(cursor.tile)
-		if (new_unit != null):
+		if (new_unit != null and new_unit.get_instance_id() != unit.get_instance_id()):
 			_select_unit(new_unit)
 			if (new_unit.team == Teams.PLAYER):
 				battle_state = STATE_PLAYER_UNIT_SELECTED
