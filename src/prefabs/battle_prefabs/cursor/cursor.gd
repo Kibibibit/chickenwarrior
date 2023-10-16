@@ -20,11 +20,14 @@ var _input_dictionary: Dictionary = {
 }
 
 func _unhandled_input(event: InputEvent) -> void:
+	if (event is InputEventMouseMotion):
+		_update_mouse_used(true)
+		
 	if (not can_move):
 		return
 	if (event is InputEventMouseMotion):
 		var vector: Vector2i = _floor_position(get_global_mouse_position())
-		_update_mouse_used(true)
+		
 		_update_position(vector, true)
 	
 	for action in _input_dictionary:
