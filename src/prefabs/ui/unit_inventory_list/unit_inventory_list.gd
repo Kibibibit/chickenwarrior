@@ -52,7 +52,7 @@ func _add_item(item: Item, focused:bool) -> void:
 		button.grab_focus()
 
 func _process(_delta):
-	if (visible and not is_focus):
+	if (visible and not is_focus and not do_refocus):
 		do_refocus = true
 	elif (do_refocus and visible and not is_focus):
 		is_focus = true
