@@ -17,6 +17,12 @@ const AXE: int = 2
 ## The id for a bow weapon type. Equal to 3
 const BOW: int = 3
 
+## A list of weapon types. Primarily used in 
+## [Vocation] to determine if it can use a weapon type
+const WEAPON_TYPES: Array[int] = [
+	SWORD, LANCE, AXE, BOW
+]
+
 ## Set [base_stat] to this value if the weapon uses Strength as its base stat.
 const BASE_STRENGTH: int = 0
 ## Set [base_stat] to this value if the weapon uses Magic as its base stat.
