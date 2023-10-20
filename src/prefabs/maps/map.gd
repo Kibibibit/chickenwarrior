@@ -3,11 +3,8 @@ class_name Map
 
 const TILE_SIZE: int = 16
 
-
-
 @onready
 var _unit_parent = $Units
-
 
 var _grid_lines: MapGridLines
 

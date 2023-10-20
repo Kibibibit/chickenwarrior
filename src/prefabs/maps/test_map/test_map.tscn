@@ -14,22 +14,22 @@
 [ext_resource type="Resource" uid="uid://1xnrh07s71ig" path="res://resources/items/weapons/iron_axe.tres" id="11_ip46s"]
 [ext_resource type="Resource" uid="uid://ca6tmqlq11c5d" path="res://resources/items/weapons/iron_lance.tres" id="13_s5ur4"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dk8dm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3dvuf"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 0
 shader_parameter/moved = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ffgcc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kygat"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 1
 shader_parameter/moved = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gafns"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0411p"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 0
 shader_parameter/moved = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ncvgg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yys6q"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 1
 shader_parameter/moved = false
@@ -46,7 +46,7 @@ script = ExtResource("2_h3isd")
 z_index = 10
 
 [node name="TestSteve" parent="Units" instance=ExtResource("2_je2jo")]
-material = SubResource("ShaderMaterial_dk8dm")
+material = SubResource("ShaderMaterial_3dvuf")
 position = Vector2(64, 80)
 character = ExtResource("3_a0t6i")
 tile = Vector2i(4, 5)
@@ -54,7 +54,7 @@ inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtReso
 hp = 19
 
 [node name="TestBob" parent="Units" instance=ExtResource("2_je2jo")]
-material = SubResource("ShaderMaterial_ffgcc")
+material = SubResource("ShaderMaterial_kygat")
 position = Vector2(272, 288)
 character = ExtResource("7_x2vwp")
 team = 1
@@ -63,15 +63,15 @@ inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtReso
 hp = 10
 
 [node name="TestAlice" parent="Units" instance=ExtResource("2_je2jo")]
-material = SubResource("ShaderMaterial_gafns")
-position = Vector2(96, 256)
+material = SubResource("ShaderMaterial_0411p")
+position = Vector2(80, 240)
 character = ExtResource("9_h38tm")
-tile = Vector2i(6, 16)
+tile = Vector2i(5, 15)
 inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("11_ip46s")])
 hp = 4
 
 [node name="TestLisa" parent="Units" instance=ExtResource("2_je2jo")]
-material = SubResource("ShaderMaterial_ncvgg")
+material = SubResource("ShaderMaterial_yys6q")
 position = Vector2(112, 80)
 character = ExtResource("10_cg0gy")
 team = 1

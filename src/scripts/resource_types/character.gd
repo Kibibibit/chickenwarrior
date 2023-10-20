@@ -24,3 +24,6 @@ func _set_name(p_name: String) -> void:
 	
 func get_unit_type() -> int:
 	return vocation.unit_type_code
+	
+func get_movement() -> int:
+	return movement + vocation.movement

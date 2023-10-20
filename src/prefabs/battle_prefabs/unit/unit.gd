@@ -95,6 +95,9 @@ func get_weapon_ranges() -> Vector2i:
 				max_range = item.max_range
 	return Vector2i(min_range, max_range)
 
+func get_movement() -> int:
+	return character.get_movement()
+
 func _can_use_arms() -> bool:
 	return false
 

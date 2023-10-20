@@ -21,7 +21,7 @@ func get_move_tiles(unit: Unit, unit_positions: Dictionary) -> Array[Vector2i]:
 		var current: Vector2i = stack.pop_front()
 		var cost_to_current: int = cost_map[current]
 		
-		if (cost_to_current <= unit.character.movement):
+		if (cost_to_current <= unit.get_movement()):
 			if (
 				current != unit.tile and 
 				not current in out and 
@@ -34,8 +34,7 @@ func get_move_tiles(unit: Unit, unit_positions: Dictionary) -> Array[Vector2i]:
 					var unit_at_neighbour: bool = neighbour in unit_positions
 					var can_pass_tile: bool = not unit_at_neighbour
 					if (unit_at_neighbour):
-						var mounted: bool = unit.get_unit_type() == UnitTypes.CAVALRY or unit.get_unit_type() == UnitTypes.FLIER
-						can_pass_tile = mounted or instance_from_id(unit_positions[neighbour]).team == unit.team
+						can_pass_tile = unit.get_unit_type() == UnitTypes.FLIER or instance_from_id(unit_positions[neighbour]).team == unit.team
 					if (can_pass_tile):
 						var cost: int = cost_to_current + map.get_tile_cost(neighbour, unit.get_unit_type())
 						if (not neighbour in cost_map):
