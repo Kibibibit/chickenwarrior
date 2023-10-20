@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=3 format=3 uid="uid://ca6tmqlq11c5d"]
+
+[ext_resource type="Texture2D" uid="uid://corg88oxx70sa" path="res://assets/icons/lance.png" id="1_22bke"]
+[ext_resource type="Script" path="res://src/scripts/resource_types/weapon.gd" id="1_gu78v"]
+
+[resource]
+resource_name = "Iron Lance"
+script = ExtResource("1_gu78v")
+weapon_type = 1
+base_stat = 0
+might = 6
+hit_chance = 80
+crit_chance = 0
+weight = 6
+min_rank = 0
+attack_count = 1
+min_range = 1
+max_range = 1
+name = "Iron Lance"
+breakable = true
+max_uses = 30
+icon = ExtResource("1_22bke")

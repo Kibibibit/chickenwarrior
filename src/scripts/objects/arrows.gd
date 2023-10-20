@@ -55,7 +55,7 @@ var map: Map
 var path: Array[Vector2i]
 
 
-func draw_path(from: Vector2i, to: Vector2i, unit_type: StringName, passable_tiles: Array[Vector2i]) -> void:
+func draw_path(from: Vector2i, to: Vector2i, unit_type: int, passable_tiles: Array[Vector2i]) -> void:
 	_remove_sprites()
 	path = _a_star(from, to, unit_type, passable_tiles)
 	if (path.size() > 1):
@@ -100,7 +100,7 @@ func _remove_sprites() -> void:
 		child.queue_free()
 		remove_child(child)
 
-func _a_star(start: Vector2i, goal: Vector2i, unit_type: StringName, passable_tiles: Array[Vector2i]) -> Array[Vector2i]:
+func _a_star(start: Vector2i, goal: Vector2i, unit_type: int, passable_tiles: Array[Vector2i]) -> Array[Vector2i]:
 	var queue: PriorityQueue = PriorityQueue.new()
 	var path_map: Dictionary = {}
 	var g_scores: Dictionary = {}

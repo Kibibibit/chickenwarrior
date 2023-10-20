@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b8qe7ek7xcaq5"]
+[gd_scene load_steps=18 format=3 uid="uid://b8qe7ek7xcaq5"]
 
 [ext_resource type="TileSet" uid="uid://dxvy85xtp5bhc" path="res://resources/tilesets/test_map_tileset.tres" id="1_ne74p"]
 [ext_resource type="Script" path="res://src/prefabs/maps/map.gd" id="2_h3isd"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://de2cga6x2e5cr" path="res://resources/characters/player/test_alice.tres" id="9_h38tm"]
 [ext_resource type="Resource" uid="uid://wsm0q68n174f" path="res://resources/characters/enemy/test_lisa.tres" id="10_cg0gy"]
 [ext_resource type="Resource" uid="uid://1xnrh07s71ig" path="res://resources/items/weapons/iron_axe.tres" id="11_ip46s"]
+[ext_resource type="Resource" uid="uid://ca6tmqlq11c5d" path="res://resources/items/weapons/iron_lance.tres" id="13_s5ur4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dk8dm"]
 shader = ExtResource("4_84i1k")
@@ -75,4 +76,5 @@ position = Vector2(112, 80)
 character = ExtResource("10_cg0gy")
 team = 1
 tile = Vector2i(7, 5)
+inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("13_s5ur4")])
 hp = 5

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Vocation" load_steps=2 format=3 uid="uid://br2ggormv53wl"]
+
+[ext_resource type="Script" path="res://src/scripts/resource_types/vocation.gd" id="1_nhsoy"]
+
+[resource]
+resource_name = "Lord"
+script = ExtResource("1_nhsoy")
+name = "Lord"
+unit_type_code = 0
+useable_weapons = 0
+promotions = Array[ExtResource("1_nhsoy")]([])
+hp = 0
+movement = 0
+strength = 0
+magic = 0
+dexterity = 0
+speed = 0
+luck = 0
+defence = 0
+resistance = 0
+hp_growth = 0

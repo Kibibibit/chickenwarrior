@@ -1,10 +1,19 @@
-[gd_resource type="Resource" script_class="Character" load_steps=2 format=3 uid="uid://dg4m15bcawron"]
+[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://dg4m15bcawron"]
 
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_fmeek"]
+[ext_resource type="Resource" uid="uid://br2ggormv53wl" path="res://resources/vocations/lord.tres" id="2_hicim"]
 
 [resource]
 resource_name = "TestBob"
 script = ExtResource("1_fmeek")
 name = "TestBob"
-hp = 10
+vocation = ExtResource("2_hicim")
+hp = 24
 movement = 5
+strength = null
+magic = null
+dexterity = null
+speed = null
+luck = null
+defence = null
+resistance = null

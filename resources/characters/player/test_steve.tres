@@ -1,10 +1,19 @@
-[gd_resource type="Resource" script_class="Character" load_steps=2 format=3 uid="uid://cuknc7mc3uewy"]
+[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://cuknc7mc3uewy"]
 
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_b5jpm"]
+[ext_resource type="Resource" uid="uid://dkxxw1gqwe1fn" path="res://resources/vocations/cavalier.tres" id="2_owy5m"]
 
 [resource]
 resource_name = "TestSteve"
 script = ExtResource("1_b5jpm")
 name = "TestSteve"
+vocation = ExtResource("2_owy5m")
 hp = 19
 movement = 5
+strength = null
+magic = null
+dexterity = null
+speed = null
+luck = null
+defence = null
+resistance = null

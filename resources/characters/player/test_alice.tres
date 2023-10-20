@@ -1,10 +1,19 @@
-[gd_resource type="Resource" script_class="Character" load_steps=2 format=3 uid="uid://de2cga6x2e5cr"]
+[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://de2cga6x2e5cr"]
 
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_xq0eu"]
+[ext_resource type="Resource" uid="uid://b2iovfh4umnqu" path="res://resources/vocations/soldier.tres" id="2_vrjsd"]
 
 [resource]
 resource_name = "TestAlice"
 script = ExtResource("1_xq0eu")
 name = "TestAlice"
-hp = 4
+vocation = ExtResource("2_vrjsd")
+hp = 22
 movement = 5
+strength = null
+magic = null
+dexterity = null
+speed = null
+luck = null
+defence = null
+resistance = null

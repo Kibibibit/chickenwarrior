@@ -1,10 +1,19 @@
-[gd_resource type="Resource" script_class="Character" load_steps=2 format=3 uid="uid://wsm0q68n174f"]
+[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://wsm0q68n174f"]
 
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_vpjpv"]
+[ext_resource type="Resource" uid="uid://ch3mv12x6d2gw" path="res://resources/vocations/pegasus_knight.tres" id="2_3cxyw"]
 
 [resource]
 resource_name = "TestLisa"
 script = ExtResource("1_vpjpv")
 name = "TestLisa"
-hp = 5
+vocation = ExtResource("2_3cxyw")
+hp = 22
 movement = 5
+strength = null
+magic = null
+dexterity = null
+speed = null
+luck = null
+defence = null
+resistance = null

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Vocation" load_steps=2 format=3 uid="uid://ch3mv12x6d2gw"]
+
+[ext_resource type="Script" path="res://src/scripts/resource_types/vocation.gd" id="1_nb6fq"]
+
+[resource]
+resource_name = "Pegasus Knight"
+script = ExtResource("1_nb6fq")
+name = "Pegasus Knight"
+unit_type_code = 3
+useable_weapons = 2
+promotions = Array[ExtResource("1_nb6fq")]([])
+hp = 0
+movement = 0
+strength = 0
+magic = 0
+dexterity = 0
+speed = 0
+luck = 0
+defence = 0
+resistance = 0
+hp_growth = 0

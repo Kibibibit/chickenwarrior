@@ -38,5 +38,5 @@ func get_tile_type(tile: Vector2i) -> StringName:
 	else:
 		return TileTypes.VOID
 
-func get_tile_cost(tile: Vector2i, unit_type: StringName = UnitTypes.INFANTRY) -> int:
+func get_tile_cost(tile: Vector2i, unit_type: int = UnitTypes.INFANTRY) -> int:
 	return TileTypes.get_cost(get_tile_type(tile), unit_type)

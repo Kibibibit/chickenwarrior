@@ -49,7 +49,7 @@ func get_tile_name(tile_type: StringName) -> String:
 		tile_type = VOID
 	return TILE_NAMES[tile_type]
 
-func get_cost(tile_type: StringName, unit_type: StringName = UnitTypes.INFANTRY) -> int:
+func get_cost(tile_type: StringName, unit_type: int = UnitTypes.INFANTRY) -> int:
 	var base_cost: int = COST_MAX
 	if (tile_type == VOID):
 		return COST_MAX

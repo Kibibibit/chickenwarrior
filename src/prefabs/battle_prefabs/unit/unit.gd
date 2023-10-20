@@ -58,8 +58,8 @@ func _ready() -> void:
 	material = preload("res://resources/materials/unit_shader/unit_shader_material.tres").duplicate()
 	material.set_shader_parameter("player", team)
 
-func get_unit_type() -> StringName:
-	return UnitTypes.INFANTRY
+func get_unit_type() -> int:
+	return character.get_unit_type()
 
 func can_use(_item: Item) -> bool:
 	return true
