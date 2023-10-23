@@ -14,7 +14,7 @@ func get_move_tiles(unit: Unit, unit_positions: Dictionary) -> Array[Vector2i]:
 	var cost_map: Dictionary = {
 		unit.tile: 0
 	}
-	var out: Array[Vector2i] = []
+	var out: Array[Vector2i] = [unit.tile]
 	var stack: Array[Vector2i] = [unit.tile]
 	
 	while (not stack.is_empty()):
@@ -23,7 +23,6 @@ func get_move_tiles(unit: Unit, unit_positions: Dictionary) -> Array[Vector2i]:
 		
 		if (cost_to_current <= unit.get_movement()):
 			if (
-				current != unit.tile and 
 				not current in out and 
 				not current in unit_positions
 			):

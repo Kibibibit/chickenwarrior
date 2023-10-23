@@ -30,19 +30,3 @@ growth_rates = {
 "stat_speed": 0,
 "stat_strength": 0
 }
-hp = 20
-strength = 8
-magic = 3
-dexterity = 5
-speed = 6
-luck = 4
-defence = 5
-resistance = 2
-hp_growth = 10
-strength_growth = 0
-magic_growth = 0
-dexterity_growth = 5
-speed_growth = 0
-luck_growth = 0
-defence_growth = 0
-resistance_growth = -5

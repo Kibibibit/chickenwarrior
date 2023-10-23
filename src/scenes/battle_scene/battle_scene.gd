@@ -157,6 +157,8 @@ func _cursor_action_player_unit_selected_state(action: int) -> void:
 		unit.path_to(arrows.path)
 		cursor.can_move = false
 		battle_state = STATE_PLAYER_UNIT_MOVED
+		if (unit.tile == cursor.tile):
+			_unit_move_finished(unit)
 		
 
 func _unit_move_finished(unit: Unit) -> void:
