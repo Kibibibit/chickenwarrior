@@ -13,6 +13,27 @@ vocation = ExtResource("2_owy5m")
 inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("1_njqho"), ExtResource("2_us8v2")])
 level = 1
 xp = 0
+stats = {
+"stat_defence": 6,
+"stat_dexterity": 6,
+"stat_hp": 28,
+"stat_luck": 5,
+"stat_magic": 7,
+"stat_resistance": 6,
+"stat_speed": 7,
+"stat_strength": 8
+}
+growth_rates = {
+"stat_defence": 40,
+"stat_dexterity": 45,
+"stat_hp": 55,
+"stat_luck": 25,
+"stat_magic": 40,
+"stat_resistance": 40,
+"stat_speed": 40,
+"stat_strength": 40
+}
+movement = 4
 hp = 28
 strength = 8
 magic = 7
@@ -21,7 +42,6 @@ speed = 7
 luck = 5
 defence = 6
 resistance = 6
-movement = 4
 hp_growth = 55
 strength_growth = 40
 magic_growth = 40

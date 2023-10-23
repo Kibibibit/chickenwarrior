@@ -10,6 +10,26 @@ unit_type_code = 0
 useable_weapons = 3
 promotions = Array[ExtResource("1_nhsoy")]([])
 movement = 1
+min_stats = {
+"stat_defence": 6,
+"stat_dexterity": 5,
+"stat_hp": 25,
+"stat_luck": 8,
+"stat_magic": 6,
+"stat_resistance": 3,
+"stat_speed": 7,
+"stat_strength": 9
+}
+growth_rates = {
+"stat_defence": 0,
+"stat_dexterity": 10,
+"stat_hp": 20,
+"stat_luck": 5,
+"stat_magic": 0,
+"stat_resistance": 0,
+"stat_speed": 0,
+"stat_strength": 0
+}
 hp = 25
 strength = 9
 magic = 6

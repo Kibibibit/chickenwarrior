@@ -29,35 +29,9 @@ class_name Vocation
 ## When a unit is this vocation, they get this much extra movement
 @export var movement: int
 
-@export_group("Min Stats")
-## When a unit is this vocation, they will get at least this much hp
-@export var hp: int
+@export var min_stats: Dictionary = {} : set = _set_stats
+@export var growth_rates: Dictionary = {} : set = _set_growth_rates
 
-## When a unit is this vocation, they will get at least this much strength
-@export var strength: int
-## When a unit is this vocation, they will get at least this much magic
-@export var magic: int
-## When a unit is this vocation, they will get at least this much dexterity
-@export var dexterity: int
-## When a unit is this vocation, they will get at least this much speed
-@export var speed: int
-## When a unit is this vocation, they will get at least this much luck
-@export var luck: int
-## When a unit is this vocation, they will get at least this much defence
-@export var defence: int
-## When a unit is this vocation, they will get at least this much resistance
-@export var resistance: int
-
-@export_group("Growth Rates")
-## When a unit with this vocation, their hp growth rate is increased by this much
-@export var hp_growth: int
-@export var strength_growth: int
-@export var magic_growth: int
-@export var dexterity_growth: int
-@export var speed_growth: int
-@export var luck_growth: int
-@export var defence_growth: int
-@export var resistance_growth: int
 
 ## This setter is just helpful for setting [resource_name as well]
 func _set_name(p_name: String) -> void:
@@ -68,21 +42,28 @@ func _set_name(p_name: String) -> void:
 func is_weapon_type_useable(weapon_type: int) -> bool:
 	var mask: int = roundi(pow(2, weapon_type))
 	return useable_weapons & mask > 0
-	
 
-func get_hp() -> int:
-	return hp
-func get_strength() -> int:
-	return strength
-func get_magic() -> int:
-	return magic
-func get_dexterity() -> int:
-	return dexterity
-func get_speed() -> int:
-	return speed
-func get_luck() -> int:
-	return luck
-func get_defence() -> int:
-	return defence
-func get_resistance() -> int:
-	return resistance
+
+func _set_stats(p_stats: Dictionary) -> void:
+	if (min_stats == null):
+		min_stats = {}
+	for stat in StatTypes.ALL:
+		if (p_stats != null):
+			if (stat in p_stats):
+				min_stats[stat] = p_stats[stat]
+			else:
+				min_stats[stat] = 0
+		else:
+			min_stats[stat] = 0
+			
+func _set_growth_rates(p_stats: Dictionary) -> void:
+	if (growth_rates == null):
+		growth_rates = {}
+	for stat in StatTypes.ALL:
+		if (p_stats != null):
+			if (stat in p_stats):
+				growth_rates[stat] = p_stats[stat]
+			else:
+				growth_rates[stat] = 0
+		else:
+			growth_rates[stat] = 0

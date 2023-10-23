@@ -10,6 +10,26 @@ unit_type_code = 0
 useable_weapons = 2
 promotions = Array[ExtResource("1_701yp")]([])
 movement = 1
+min_stats = {
+"stat_defence": 5,
+"stat_dexterity": 5,
+"stat_hp": 20,
+"stat_luck": 4,
+"stat_magic": 3,
+"stat_resistance": 2,
+"stat_speed": 6,
+"stat_strength": 8
+}
+growth_rates = {
+"stat_defence": 0,
+"stat_dexterity": 5,
+"stat_hp": 10,
+"stat_luck": 0,
+"stat_magic": 0,
+"stat_resistance": -5,
+"stat_speed": 0,
+"stat_strength": 0
+}
 hp = 20
 strength = 8
 magic = 3
