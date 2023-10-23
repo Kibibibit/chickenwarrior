@@ -143,6 +143,9 @@ func _cursor_action_player_turn_state(action: int) -> void:
 			else:
 				battle_state = STATE_ENEMY_UNIT_SELECTED
 				return
+	elif unit != null and action == Cursor.DESELECT:
+		# Display the stats menu
+		unit.character.print_stats()
 
 func _cursor_action_player_unit_selected_state(action: int) -> void:
 	var unit: Unit = _selected_unit()
