@@ -9,14 +9,11 @@ var _vbox: VBoxContainer = $VBoxContainer
 
 
 var items: Array[Item] = []
-var is_focus: bool = false
-var do_refocus: bool = false
 
 func _ready() -> void:
 	for child in _vbox.get_children():
 		child.queue_free()
 		_vbox.remove_child(child)
-
 
 func _clear_items() -> void:
 	for child in _vbox.get_children():
@@ -27,6 +24,9 @@ func _clear_items() -> void:
 func select_item(inventory: Array[Item]) -> Item:
 	var focused: bool = false
 	items = inventory
+	
+	await get_tree().physics_frame
+	
 	for item in items:
 		_add_item(item, focused)
 		if (not focused):
@@ -51,17 +51,9 @@ func _add_item(item: Item, focused:bool) -> void:
 	if (not focused):
 		button.grab_focus()
 
-func _process(_delta):
-	if (visible and not is_focus and not do_refocus):
-		do_refocus = true
-	elif (do_refocus and visible and not is_focus):
-		is_focus = true
-	elif (not visible):
-		do_refocus = false
-		is_focus = false
 
 func _unhandled_input(event):
-	if (not visible or not is_focus):
+	if (not visible):
 		return
 	if (event is InputEventMouseButton):
 		if (event.pressed and event.button_index == MOUSE_BUTTON_RIGHT):

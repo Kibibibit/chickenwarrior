@@ -1,19 +1,32 @@
-[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://cuknc7mc3uewy"]
+[gd_resource type="Resource" script_class="Character" load_steps=5 format=3 uid="uid://cuknc7mc3uewy"]
 
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_b5jpm"]
+[ext_resource type="Resource" uid="uid://ca6tmqlq11c5d" path="res://resources/items/weapons/iron_lance.tres" id="1_njqho"]
 [ext_resource type="Resource" uid="uid://dkxxw1gqwe1fn" path="res://resources/vocations/cavalier.tres" id="2_owy5m"]
+[ext_resource type="Resource" uid="uid://b7kw2prkn2w8b" path="res://resources/items/weapons/iron_sword.tres" id="2_us8v2"]
 
 [resource]
 resource_name = "TestSteve"
 script = ExtResource("1_b5jpm")
 name = "TestSteve"
 vocation = ExtResource("2_owy5m")
-hp = 19
-movement = 5
-strength = 0
-magic = 0
-dexterity = 0
-speed = 0
-luck = 0
-defence = 0
-resistance = 0
+inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("1_njqho"), ExtResource("2_us8v2")])
+level = 1
+xp = 0
+hp = 28
+strength = 8
+magic = 7
+dexterity = 6
+speed = 7
+luck = 5
+defence = 6
+resistance = 6
+movement = 4
+hp_growth = 55
+strength_growth = 40
+magic_growth = 40
+dexterity_growth = 45
+speed_growth = 40
+luck_growth = 25
+defence_growth = 30
+resistance_growth = 40

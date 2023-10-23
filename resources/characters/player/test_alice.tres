@@ -1,19 +1,32 @@
-[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://de2cga6x2e5cr"]
+[gd_resource type="Resource" script_class="Character" load_steps=5 format=3 uid="uid://de2cga6x2e5cr"]
 
+[ext_resource type="Resource" uid="uid://de1nonwxb5gvd" path="res://resources/items/weapons/rapier.tres" id="1_t2uja"]
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_xq0eu"]
-[ext_resource type="Resource" uid="uid://b2iovfh4umnqu" path="res://resources/vocations/soldier.tres" id="2_vrjsd"]
+[ext_resource type="Resource" uid="uid://br2ggormv53wl" path="res://resources/vocations/lord.tres" id="2_qfhat"]
+[ext_resource type="Resource" uid="uid://ca6tmqlq11c5d" path="res://resources/items/weapons/iron_lance.tres" id="2_tu2y1"]
 
 [resource]
 resource_name = "TestAlice"
 script = ExtResource("1_xq0eu")
 name = "TestAlice"
-vocation = ExtResource("2_vrjsd")
-hp = 22
-movement = 5
-strength = 0
-magic = 0
-dexterity = 0
-speed = 0
-luck = 0
-defence = 0
-resistance = 0
+vocation = ExtResource("2_qfhat")
+inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("1_t2uja"), ExtResource("2_tu2y1")])
+level = 1
+xp = 0
+hp = 28
+strength = 12
+magic = 6
+dexterity = 5
+speed = 7
+luck = 8
+defence = 7
+resistance = 4
+movement = 4
+hp_growth = 55
+strength_growth = 60
+magic_growth = 20
+dexterity_growth = 50
+speed_growth = 50
+luck_growth = 25
+defence_growth = 40
+resistance_growth = 20

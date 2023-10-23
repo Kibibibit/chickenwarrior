@@ -1,19 +1,31 @@
-[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://dg4m15bcawron"]
+[gd_resource type="Resource" script_class="Character" load_steps=4 format=3 uid="uid://dg4m15bcawron"]
 
+[ext_resource type="Resource" uid="uid://ca6tmqlq11c5d" path="res://resources/items/weapons/iron_lance.tres" id="1_6d553"]
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_fmeek"]
-[ext_resource type="Resource" uid="uid://br2ggormv53wl" path="res://resources/vocations/lord.tres" id="2_hicim"]
+[ext_resource type="Resource" uid="uid://b2iovfh4umnqu" path="res://resources/vocations/soldier.tres" id="2_gvuit"]
 
 [resource]
 resource_name = "TestBob"
 script = ExtResource("1_fmeek")
 name = "TestBob"
-vocation = ExtResource("2_hicim")
-hp = 24
-movement = 5
-strength = 0
-magic = 0
-dexterity = 0
-speed = 0
-luck = 0
-defence = 0
-resistance = 0
+vocation = ExtResource("2_gvuit")
+inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("1_6d553")])
+level = 1
+xp = 0
+hp = 27
+strength = 9
+magic = 5
+dexterity = 5
+speed = 8
+luck = 6
+defence = 6
+resistance = 2
+movement = 4
+hp_growth = 55
+strength_growth = 45
+magic_growth = 30
+dexterity_growth = 35
+speed_growth = 50
+luck_growth = 35
+defence_growth = 40
+resistance_growth = 25

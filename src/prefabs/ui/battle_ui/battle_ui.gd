@@ -26,7 +26,7 @@ func show_action_list(valid_actions: Array[int]) -> int:
 func show_weapon_list(unit: Unit) -> Weapon:
 	var item_list: UnitInventoryList = inventory_list_scene.instantiate()
 	canvas_layer.add_child(item_list)
-	var item: Item = await item_list.select_item(unit.inventory)
+	var item: Item = await item_list.select_item(unit.character.inventory)
 	var weapon: Weapon = null
 	if (item != null):
 		if (item is Weapon):
@@ -56,7 +56,9 @@ func set_unit(unit: Unit) -> void:
 	else:
 		unit_panel.visible = true
 		var hp: int = unit.hp
-		var max_hp: int = unit.character.hp
+		var max_hp: int = unit.get_max_hp()
 		var name_: String = unit.character.name
-		var mov: int = unit.character.movement
-		unit_label.text = "Character: %s (%s/%s)\nMovement: %s" % [name_, hp, max_hp, mov]
+		var class_name_: String = unit.character.vocation.name
+		var mov: int = unit.get_movement()
+		var lvl: int = unit.character.level
+		unit_label.text = "%s (%s/%s)\n Lv. %s %s\nMovement: %s" % [name_, hp, max_hp, lvl, class_name_, mov]

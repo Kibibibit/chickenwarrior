@@ -2,6 +2,6 @@
 
 [ext_resource type="Script" path="res://src/scenes/main/main.gd" id="1_yufgr"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Root" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_yufgr")

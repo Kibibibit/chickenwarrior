@@ -44,7 +44,7 @@ const RANK_A: int = 4
 const RANK_S: int = 5
 
 ## The type of this weapon. Should be one of [SWORD], [LANCE], [AXE], ... and so on.
-@export_enum("Sword", "Lance", "Axe", "Bow") var weapon_type: int
+@export_enum("Sword", "Lance", "Axe", "Bow") var weapon_type: int : set = _set_weapon_type
 ## The base stat that this weapon uses to calculate the attack stat. Should be on of [BASE_STRENGTH], [BASE_MAGIC] and so on.
 @export_enum("Strength", "Magic", "Dexterity") var base_stat: int
 ## The base damage of this weapon, modified by the base stat of the unit using it.
@@ -61,8 +61,25 @@ const RANK_S: int = 5
 ## For example, if set to 2, each standard attack will trigger twice.
 @export var attack_count: int = 1
 
+## What unit types this weapon has an advantage over
+@export_flags("Infantry","Armoured","Cavalry", "Flier") var type_bonuses: int
+
 @export_group("Range")
 ## The minimum range that this weapon can attack at. For most weapons, this should be 1.
 @export var min_range: int = 1
 ## THe maximum range that this weapon can attack at. For melee weapons, this should be 1.
 @export var max_range: int = 1
+
+## Returns true if this weapon has a type advantage against the given unit type
+func has_type_bonus(unit_type_code: int) -> bool:
+	var mask: int = roundi(pow(2, unit_type_code))
+	return type_bonuses & mask > 0
+
+
+func _set_weapon_type(p_weapon_type: int) -> void:
+	weapon_type = p_weapon_type
+	## Bows inherently have an advantage over fliers
+	if (weapon_type == BOW):
+		if (!has_type_bonus(UnitTypes.FLIER)):
+			type_bonuses +=  1 << UnitTypes.FLIER
+	

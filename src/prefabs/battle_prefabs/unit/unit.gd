@@ -30,7 +30,6 @@ signal move_finished
 @export var character: Character: set = _set_character
 @export_enum("Player", "Enemy", "Ally") var team: int: set = _set_team
 @export var tile: Vector2i: set = _set_tile
-@export var inventory: Array[Item]
 @export var hp: int = 0
 var moved: bool = false : set = _set_moved
 
@@ -39,7 +38,7 @@ var _path: Array[Vector2i] = []
 func _set_character(p_character: Character) -> void:
 	character = p_character
 	if (Engine.is_editor_hint() and p_character != null):
-		hp = character.hp
+		hp = character.get_max_hp()
 
 func _set_tile(p_tile: Vector2i):
 	tile = p_tile
@@ -57,12 +56,15 @@ func _set_moved(p_moved: bool) -> void:
 func _ready() -> void:
 	material = preload("res://resources/materials/unit_shader/unit_shader_material.tres").duplicate()
 	material.set_shader_parameter("player", team)
+	hp = character.get_max_hp()
+	
+	
 
 func get_unit_type() -> int:
 	return character.get_unit_type()
 
-func can_use(_item: Item) -> bool:
-	return true
+func get_max_hp() -> int:
+	return character.get_max_hp()
 
 func path_to(path: Array[Vector2i]) -> void:
 	_path = path.duplicate()
@@ -76,7 +78,7 @@ func get_valid_actions(new_tile: Vector2i, attack_tiles: Array[Vector2i], unit_p
 	if (_can_assist()):
 		out.append(ACTION_ASSIST)
 	
-	if (not inventory.is_empty()):
+	if (not character.inventory.is_empty()):
 		out.append(ACTION_ITEMS)
 	
 	out.append(ACTION_WAIT)
@@ -85,15 +87,7 @@ func get_valid_actions(new_tile: Vector2i, attack_tiles: Array[Vector2i], unit_p
 
 
 func get_weapon_ranges() -> Vector2i:
-	var min_range:int = -1
-	var max_range:int = -1
-	for item in inventory:
-		if (item is Weapon and can_use(item)):
-			if (item.min_range < min_range or min_range == -1):
-				min_range = item.min_range
-			if (item.max_range > max_range or max_range == -1):
-				max_range = item.max_range
-	return Vector2i(min_range, max_range)
+	return character.get_weapon_ranges()
 
 func get_movement() -> int:
 	return character.get_movement()

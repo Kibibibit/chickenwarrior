@@ -7,10 +7,6 @@ signal action_selected(action: int)
 var _vbox: VBoxContainer = $VBoxContainer
 
 
-var is_focus: bool = false
-var do_refocus: bool = false
-
-
 var actions: Array[int] = []
 
 func _ready() -> void:
@@ -27,6 +23,7 @@ func _clear_actions() -> void:
 func show_actions(p_actions: Array[int]) -> int:
 	var focused: bool = false
 	actions = p_actions
+	await get_tree().physics_frame
 	for action in actions:
 		_add_action(action, focused)
 		if (not focused):
@@ -51,17 +48,9 @@ func _add_action(action: int, focused:bool) -> void:
 	if (not focused):
 		button.grab_focus()
 
-func _process(_delta):
-	if (visible and not is_focus and not do_refocus):
-		do_refocus = true
-	elif (do_refocus and visible and not is_focus):
-		is_focus = true
-	elif (not visible):
-		do_refocus = false
-		is_focus = false
 
 func _unhandled_input(event):
-	if (not visible or not is_focus):
+	if (not visible):
 		return
 	if (event is InputEventMouseButton):
 		if (event.pressed and event.button_index == MOUSE_BUTTON_RIGHT):
