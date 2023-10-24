@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Vocation" load_steps=2 format=3 uid="uid://ieo74l36n503"]
+
+[ext_resource type="Script" path="res://src/scripts/resource_types/vocation.gd" id="1_q4en6"]
+
+[resource]
+resource_name = "Archer"
+script = ExtResource("1_q4en6")
+name = "Archer"
+unit_type_code = 0
+useable_weapons = 8
+promotions = Array[ExtResource("1_q4en6")]([])
+movement = 1
+min_stats = {
+"stat_defence": 5,
+"stat_dexterity": 8,
+"stat_hp": 25,
+"stat_luck": 8,
+"stat_magic": 6,
+"stat_resistance": 2,
+"stat_speed": 7,
+"stat_strength": 8
+}
+growth_rates = {
+"stat_defence": 0,
+"stat_dexterity": 10,
+"stat_hp": 5,
+"stat_luck": 5,
+"stat_magic": 0,
+"stat_resistance": 0,
+"stat_speed": 0,
+"stat_strength": 0
+}

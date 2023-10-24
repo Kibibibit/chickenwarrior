@@ -1,16 +1,17 @@
-[gd_resource type="Resource" script_class="Character" load_steps=5 format=3 uid="uid://de2cga6x2e5cr"]
+[gd_resource type="Resource" script_class="Character" load_steps=6 format=3 uid="uid://de2cga6x2e5cr"]
 
 [ext_resource type="Resource" uid="uid://de1nonwxb5gvd" path="res://resources/items/weapons/rapier.tres" id="1_t2uja"]
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_xq0eu"]
-[ext_resource type="Resource" uid="uid://br2ggormv53wl" path="res://resources/vocations/lord.tres" id="2_qfhat"]
 [ext_resource type="Resource" uid="uid://ca6tmqlq11c5d" path="res://resources/items/weapons/iron_lance.tres" id="2_tu2y1"]
+[ext_resource type="Resource" uid="uid://bitdfqkohrmcj" path="res://resources/items/weapons/iron_bow.tres" id="3_5g2fi"]
+[ext_resource type="Resource" uid="uid://ieo74l36n503" path="res://resources/vocations/archer.tres" id="5_8nm56"]
 
 [resource]
 resource_name = "TestAlice"
 script = ExtResource("1_xq0eu")
 name = "TestAlice"
-vocation = ExtResource("2_qfhat")
-inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("1_t2uja"), ExtResource("2_tu2y1")])
+vocation = ExtResource("5_8nm56")
+inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("1_t2uja"), ExtResource("2_tu2y1"), ExtResource("3_5g2fi")])
 level = 1
 xp = 0
 stats = {

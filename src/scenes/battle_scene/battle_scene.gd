@@ -18,6 +18,7 @@ var unit_positions: Dictionary = {}
 
 var selected_unit_id: int = Constants.NULL_ID
 var unit_start_pos: Vector2i
+var cursor_start_pos: Vector2i
 
 var move_tiles: Array[Vector2i]
 var attack_tiles: Array[Vector2i]
@@ -125,6 +126,7 @@ func _action_selected(action: int) -> void:
 		battle_state = STATE_PLAYER_UNIT_SELECTED
 
 func _attack_action_selected(unit: Unit) -> void:
+	cursor_start_pos = cursor.tile
 	var weapon: Weapon = await ui.show_weapon_list(unit)
 	if (weapon == null):
 		_unit_move_finished(unit)
@@ -207,6 +209,7 @@ func _cursor_action_player_attack_select(action: int) -> void:
 		tile_highlight.highlight_tiles(move_tiles, attack_tiles)
 		battle_state = STATE_PLAYER_UNIT_MOVED
 		cursor.allowed_tiles = []
+		cursor.tile = cursor_start_pos
 		_attack_action_selected(unit)
 
 
