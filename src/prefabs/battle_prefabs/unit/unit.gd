@@ -25,6 +25,7 @@ const TEAM_ALLY: int = 2
 
 const UNIT_MOVE_SPEED: int = 500
 
+
 signal move_finished
 
 @export var character: Character: set = _set_character
@@ -32,6 +33,7 @@ signal move_finished
 @export var tile: Vector2i: set = _set_tile
 @export var hp: int = 0
 var moved: bool = false : set = _set_moved
+var current_tile_type: StringName = TileTypes.VOID
 
 var _path: Array[Vector2i] = []
 
@@ -85,6 +87,8 @@ func get_valid_actions(new_tile: Vector2i, attack_tiles: Array[Vector2i], unit_p
 	out.sort()
 	return out
 
+func get_equipped_weapon() -> Weapon:
+	return character.get_equipped_weapon()
 
 func get_weapon_ranges() -> Vector2i:
 	return character.get_weapon_ranges()
@@ -110,6 +114,97 @@ func _can_attack(new_tile: Vector2i, attack_tiles: Array[Vector2i], unit_positio
 	
 func _can_assist() -> bool:
 	return false
+
+
+
+func get_protection(weapon_base_stat: StringName) -> int:
+	var stat: int = character.get_stat(weapon_base_stat)
+	
+	return stat + TileTypes.get_stat_bonus(current_tile_type, weapon_base_stat)
+
+func get_damage_per_attack(enemy: Unit) -> int:
+	var weapon: Weapon = get_equipped_weapon()
+	var might: int = 0
+	var base_stat_code: StringName = StatTypes.STRENGTH
+	if (weapon != null):
+		might = weapon.might
+		base_stat_code = weapon.get_weapon_stat_code()
+		if (weapon.has_type_bonus(enemy.get_unit_type())):
+			might *= 3
+	return might + character.get_stat(base_stat_code) - enemy.get_protection(base_stat_code)
+
+func get_attack_speed() -> int:
+	var weapon: Weapon = get_equipped_weapon()
+	var weight: int = 0
+	if (weapon != null):
+		weight = weapon.weight
+	var speed: int = character.get_stat(StatTypes.SPEED) 
+	var strength: int = character.get_stat(StatTypes.STRENGTH)
+	return speed - max(0,weight-floori(float(strength)/5.0))
+
+func get_base_hit_chance() -> int:
+	var weapon: Weapon = get_equipped_weapon()
+	var hit_chance: int = 70
+	var is_magic: bool = false
+	var dex: int = character.get_stat(StatTypes.DEXTERITY)
+	if (weapon != null):
+		hit_chance = weapon.hit_chance
+		is_magic = weapon.get_weapon_stat_code() == StatTypes.MAGIC
+	if (is_magic):
+		return hit_chance+ floori(float(dex+character.get_stat(StatTypes.LUCK))/2.0)
+	else:
+		return hit_chance+dex
+
+func get_avoid_chance(enemy: Unit) -> int:
+	var weapon: Weapon = enemy.get_equipped_weapon()
+	var is_magic: bool = false
+	if (weapon != null) :
+		is_magic = weapon.get_weapon_stat_code() == StatTypes.MAGIC
+	var out: int = 0
+	if (is_magic):
+		out = floori(float(character.get_stat(StatTypes.SPEED)+ character.get_stat(StatTypes.LUCK))/2.0)
+	else:
+		out = get_attack_speed()
+	return out + TileTypes.get_stat_bonus(current_tile_type, TileTypes.AVOID_BONUS)
+
+func get_hit_chance(enemy:Unit) -> int:
+	return clampi(get_base_hit_chance()-enemy.get_avoid_chance(self), 0, 100)
+
+func get_base_crit_chance() -> int:
+	var crit: int = 0
+	var weapon: Weapon = get_equipped_weapon()
+	if (weapon != null):
+		crit = weapon.crit_chance
+	
+	return crit + floori(float(character.get_stat(StatTypes.DEXTERITY)+ character.get_stat(StatTypes.LUCK))/2.0)
+
+func get_crit_chance(enemy: Unit) -> int:
+	return clampi(get_base_crit_chance() - enemy.character.get_stat(StatTypes.LUCK), 0, 100)
+
+func get_attack_count(enemy: Unit) -> int:
+	var weapon: Weapon = get_equipped_weapon()
+	var hit_count: int = 1
+	if (weapon != null):
+		hit_count = weapon.attack_count
+	if (get_attack_speed() - enemy.get_attack_speed() >= 4):
+		hit_count *= 2
+	return hit_count
+
+func get_predicted_damage(enemy: Unit) -> int:
+	var weapon: Weapon = get_equipped_weapon()
+	var weapon_name: String = "Unarmed"
+	var has_type_advantage: bool = false
+	if (weapon != null):
+		weapon_name = weapon.name
+		has_type_advantage = weapon.has_type_bonus(enemy.get_unit_type())
+	print("Using ", weapon_name)
+	if (has_type_advantage):
+		print("Type advantage! Damage times 3")
+	print(get_damage_per_attack(enemy), " dmg x",get_attack_count(enemy))
+	print(get_hit_chance(enemy),"% to hit")
+	print(get_crit_chance(enemy), "% to crit")
+	return get_attack_count(enemy)*get_damage_per_attack(enemy)
+	
 
 func _process(delta) -> void:
 	if (not _path.is_empty()):

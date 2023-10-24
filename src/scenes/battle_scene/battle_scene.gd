@@ -52,6 +52,7 @@ func _ready() -> void:
 	for unit in map.get_units():
 		units[unit.get_instance_id()] = unit
 		unit_positions[unit.tile] = unit.get_instance_id()
+		unit.current_tile_type = map.get_tile_type(unit.tile)
 
 
 func _unit_at(tile: Vector2i) -> Unit:
@@ -129,6 +130,7 @@ func _move_unit(unit: Unit) -> void:
 	unit_positions.erase(unit.tile)
 	unit.tile = cursor.tile
 	unit_positions[cursor.tile] = unit.get_instance_id()
+	unit.current_tile_type = map.get_tile_type(cursor.tile)
 	unit.moved = true
 		
 func _cursor_action_player_turn_state(action: int) -> void:
@@ -146,6 +148,12 @@ func _cursor_action_player_turn_state(action: int) -> void:
 	elif unit != null and action == Cursor.DESELECT:
 		# Display the stats menu
 		unit.character.print_stats()
+		for u in units.keys():
+			if (u != unit.get_instance_id()):
+				var other: Unit = units[u]
+				print(unit.character.name," vs ",other.character.name)
+				print(unit.get_predicted_damage(other), " damage\n")
+				
 
 func _cursor_action_player_unit_selected_state(action: int) -> void:
 	var unit: Unit = _selected_unit()

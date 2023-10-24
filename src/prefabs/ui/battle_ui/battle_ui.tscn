@@ -29,8 +29,9 @@ mouse_filter = 1
 [node name="TilePanel" type="Panel" parent="CanvasLayer/InfoTiles"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.2
-anchor_bottom = 0.1
+anchor_right = 0.25
+anchor_bottom = 0.133
+mouse_filter = 2
 
 [node name="TileLabel" type="Label" parent="CanvasLayer/InfoTiles/TilePanel"]
 layout_mode = 0
@@ -38,7 +39,8 @@ offset_left = 4.34
 offset_right = 44.34
 offset_bottom = 52.0
 text = "Tile:
-Cost:"
+Cost:
+Bonuses:"
 
 [node name="UnitPanel" type="Panel" parent="CanvasLayer/InfoTiles"]
 layout_mode = 1
@@ -47,6 +49,7 @@ anchor_left = 0.8
 anchor_top = 0.866
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="UnitLabel" type="Label" parent="CanvasLayer/InfoTiles/UnitPanel"]
 layout_mode = 0

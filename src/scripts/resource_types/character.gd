@@ -110,7 +110,12 @@ func _set_growth_rates(p_stats: Dictionary) -> void:
 		else:
 			growth_rates[stat] = 0
 	
-	
+
+func get_equipped_weapon() -> Weapon:
+	for item in inventory:
+		if (item is Weapon):
+			return item as Weapon
+	return null
 
 func print_stats() -> void:
 	print(stats)

@@ -12,6 +12,8 @@ const POISON: StringName = "tile_poison"
 const BRIDGE: StringName = "tile_bridge"
 const FORT: StringName = "tile_fort"
 
+const AVOID_BONUS: StringName = "tile_avoid_bonus"
+
 const ALL: Array[StringName] = [
 	PLAINS, TREES, MOUNTAINS, STRONGHOLD, WATER, HILLS, POISON, BRIDGE, FORT
 ]
@@ -44,6 +46,37 @@ const TILE_NAMES: Dictionary = {
 	FORT:"Fort"
 }
 
+const TILE_STAT_BONUSES: Dictionary = {
+	TREES: {
+		AVOID_BONUS: 20,
+		StatTypes.DEFENCE: 1
+	},
+	MOUNTAINS: {
+		AVOID_BONUS: 40,
+		StatTypes.DEFENCE: 2
+	},
+	STRONGHOLD: {
+		AVOID_BONUS: 30,
+		StatTypes.DEFENCE: 5,
+		StatTypes.RESISTANCE: 5
+	},
+	WATER: {
+		AVOID_BONUS: 10
+	},
+	HILLS:{
+		AVOID_BONUS: 30,
+		StatTypes.DEFENCE: 1
+	},
+	POISON: {
+		AVOID_BONUS: -5,
+	},
+	FORT: {
+		AVOID_BONUS: 20,
+		StatTypes.DEFENCE: 2,
+		StatTypes.RESISTANCE: 2
+	},
+}
+
 func get_tile_name(tile_type: StringName) -> String:
 	if not tile_type in TILE_NAMES:
 		tile_type = VOID
@@ -61,3 +94,14 @@ func get_cost(tile_type: StringName, unit_type: int = UnitTypes.INFANTRY) -> int
 		base_cost = 1
 	
 	return base_cost
+
+func get_all_stat_bonuses(tile_type:StringName) -> Dictionary:
+	if (tile_type in TILE_STAT_BONUSES):
+		return TILE_STAT_BONUSES[tile_type]
+	else:
+		return {}
+
+func get_stat_bonus(tile_type: StringName, bonus: StringName) -> int:
+	if (bonus in get_all_stat_bonuses(tile_type)):
+		return  get_all_stat_bonuses(tile_type)[bonus]
+	return 0

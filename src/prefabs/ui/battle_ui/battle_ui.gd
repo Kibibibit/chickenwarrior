@@ -44,11 +44,33 @@ func set_tile_type(tile_type: StringName) -> void:
 		tile_panel.visible = true
 		var cost: int = TileTypes.get_cost(tile_type)
 		var cost_string: String = ""
+		var bonuses_string: String = ""
+		
+		var bonuses: Dictionary = TileTypes.get_all_stat_bonuses(tile_type)
+		
+		for key in bonuses:
+			var label: String = ""
+			var percent: String = ""
+			if key == TileTypes.AVOID_BONUS:
+				label = "Avoid"
+				percent = "%"
+			else:
+				label = StatTypes.ABBREVIATION[key]
+			var sign_label = "+"
+			if (bonuses[key] < 0):
+				sign_label = ""
+			var bonus_string: String = "%s %s%s%s" % [label, sign_label, bonuses[key],percent]
+			if (bonuses_string.is_empty()):
+				bonuses_string = "Bonuses: %s" % bonus_string
+			else:
+				bonuses_string = "%s, %s" % [bonuses_string, bonus_string]
+			
+		
 		if (cost == TileTypes.COST_MAX):
 			cost_string = "Impassable"
 		else:
 			cost_string = "%s" % cost
-		tile_label.text = "Tile: %s\nCost: %s" % [TileTypes.get_tile_name(tile_type), cost_string]
+		tile_label.text = "Tile: %s\nCost: %s\n%s" % [TileTypes.get_tile_name(tile_type), cost_string, bonuses_string]
 
 func set_unit(unit: Unit) -> void:
 	if (unit == null):

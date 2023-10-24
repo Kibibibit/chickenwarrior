@@ -46,7 +46,7 @@ const RANK_S: int = 5
 ## The type of this weapon. Should be one of [SWORD], [LANCE], [AXE], ... and so on.
 @export_enum("Sword", "Lance", "Axe", "Bow") var weapon_type: int : set = _set_weapon_type
 ## The base stat that this weapon uses to calculate the attack stat. Should be on of [BASE_STRENGTH], [BASE_MAGIC] and so on.
-@export_enum("Strength", "Magic", "Dexterity") var base_stat: int
+@export_enum("Strength", "Magic") var base_stat: int
 ## The base damage of this weapon, modified by the base stat of the unit using it.
 @export var might: int
 ## The base hit chance of this weapon. Should be an integer between 0 and 100, where 0 is 0% chance to hit and 100 is a 100% chance to hit
@@ -75,6 +75,14 @@ func has_type_bonus(unit_type_code: int) -> bool:
 	var mask: int = roundi(pow(2, unit_type_code))
 	return type_bonuses & mask > 0
 
+func get_weapon_stat_code() -> StringName:
+	match base_stat:
+		BASE_MAGIC:
+			return StatTypes.MAGIC
+		BASE_DEX:
+			return StatTypes.DEXTERITY
+		_:
+			return StatTypes.STRENGTH
 
 func _set_weapon_type(p_weapon_type: int) -> void:
 	weapon_type = p_weapon_type
