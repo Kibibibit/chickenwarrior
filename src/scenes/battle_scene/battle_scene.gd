@@ -8,6 +8,7 @@ const STATE_PLAYER_UNIT_SELECTED: int = 3
 const STATE_PLAYER_UNIT_MOVED: int = 4
 const STATE_ENEMY_UNIT_SELECTED: int = 5
 const STATE_MENU_OPEN: int = 6
+const STATE_PLAYER_ATTACK_SELECT: int = 7
 
 
 var battle_state: int = STATE_PLAYER_TURN
@@ -66,6 +67,8 @@ func _cursor_action(action: int) -> void:
 			_cursor_action_player_turn_state(action)
 		STATE_PLAYER_UNIT_SELECTED:
 			_cursor_action_player_unit_selected_state(action)
+		STATE_PLAYER_ATTACK_SELECT:
+			_cursor_action_player_attack_select(action)
 		STATE_ENEMY_UNIT_SELECTED:
 			_cursor_action_enemy_unit_selected_state(action)
 		_:
@@ -112,12 +115,7 @@ func _action_selected(action: int) -> void:
 		_deselect_unit(unit)
 		battle_state = STATE_PLAYER_TURN
 	elif (action == Unit.ACTION_ATTACK):
-		var weapon: Weapon = await ui.show_weapon_list(unit)
-		if (weapon == null):
-			_unit_move_finished(unit)
-			return
-		else:
-			print(weapon.name)
+		_attack_action_selected(unit)
 
 	else:
 		if (action != Unit.ACTION_NONE):
@@ -125,6 +123,19 @@ func _action_selected(action: int) -> void:
 		cursor.can_move = true
 		unit.position = unit_start_pos*Map.TILE_SIZE
 		battle_state = STATE_PLAYER_UNIT_SELECTED
+
+func _attack_action_selected(unit: Unit) -> void:
+	var weapon: Weapon = await ui.show_weapon_list(unit)
+	if (weapon == null):
+		_unit_move_finished(unit)
+		return
+	else:
+		battle_state = STATE_PLAYER_ATTACK_SELECT
+		tile_highlight.clear_highlight()
+		attack_tiles = tile_highlight.get_attack_tiles_in_range(cursor.tile, weapon)
+		tile_highlight.highlight_tiles([], attack_tiles)
+		arrows.clear_arrows()
+		cursor.allowed_tiles = attack_tiles.duplicate()
 
 func _move_unit(unit: Unit) -> void:
 	unit_positions.erase(unit.tile)
@@ -186,7 +197,18 @@ func _cursor_action_enemy_unit_selected_state(action: int) -> void:
 				battle_state = STATE_PLAYER_UNIT_SELECTED
 		else:
 			_deselect_unit(unit)
-				
+
+func _cursor_action_player_attack_select(action: int) -> void:
+	var unit: Unit = _selected_unit()
+	if (action == Cursor.DESELECT):
+		tile_highlight.clear_highlight()
+		move_tiles = tile_highlight.get_move_tiles(unit, unit_positions)
+		attack_tiles = tile_highlight.get_attack_tiles(unit, move_tiles)
+		tile_highlight.highlight_tiles(move_tiles, attack_tiles)
+		battle_state = STATE_PLAYER_UNIT_MOVED
+		cursor.allowed_tiles = []
+		_attack_action_selected(unit)
+
 
 func _cursor_moved_player_turn_state(tile: Vector2i) -> void:
 	ui.set_unit(_unit_at(tile))

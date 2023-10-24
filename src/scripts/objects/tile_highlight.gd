@@ -83,6 +83,11 @@ func _add_sprite(tile: Vector2i, region: Rect2i) -> void:
 	sprite.material.set_shader_parameter("opacity", 0.5)
 	add_child(sprite)
 
+func get_attack_tiles_in_range(tile: Vector2i, weapon: Weapon):
+	var min_range:int = weapon.min_range
+	var max_range:int = weapon.max_range
+	return _flood_fill_attack(tile, min_range, max_range, [])
+
 func get_attack_tiles(unit: Unit, move_tiles: Array[Vector2i]) -> Array[Vector2i]:
 	var ranges: Vector2i = unit.get_weapon_ranges()
 	var min_range:int = ranges.x

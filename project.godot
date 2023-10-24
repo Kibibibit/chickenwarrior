@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Constants="*res://src/scripts/autoloads/constants.gd"
+RNG="*res://src/scripts/autoloads/rng.gd"
 Teams="*res://src/scripts/autoloads/teams.gd"
 VectorUtils="*res://src/scripts/autoloads/vector_utils.gd"
 StatTypes="*res://src/scripts/autoloads/stat_types.gd"

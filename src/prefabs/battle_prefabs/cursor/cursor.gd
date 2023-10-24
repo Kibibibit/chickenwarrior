@@ -12,6 +12,9 @@ var tile: Vector2i = Vector2i(0,0)
 var map_rect: Rect2i
 var can_move: bool = false
 
+var allowed_tiles: Array[Vector2i] = []
+
+
 var _input_dictionary: Dictionary = {
 	"ui_left": Vector2i(-1, 0),
 	"ui_right": Vector2i(1, 0),
@@ -23,18 +26,33 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (event is InputEventMouseMotion):
 		_update_mouse_used(true)
 		
-	if (not can_move):
-		return
 	if (event is InputEventMouseMotion):
 		var vector: Vector2i = _floor_position(get_global_mouse_position())
-		
-		_update_position(vector, true)
+		if ((not allowed_tiles.is_empty() and vector in allowed_tiles) or can_move) :
+			_update_position(vector, true)
 	
 	for action in _input_dictionary:
 		var direction: Vector2i = _input_dictionary[action]
 		if (Input.is_action_pressed(action)):
-			_update_mouse_used(false)
-			_update_position(tile+direction, false)
+			if (can_move):
+				_update_position(tile+direction, false)
+				_update_mouse_used(false)
+			elif (not allowed_tiles.is_empty()):
+				var new_tile: Vector2i = tile+direction
+				var closest: Vector2i = tile
+				var dist: float = 99999999
+				if (new_tile in allowed_tiles):
+					closest = new_tile
+				elif (new_tile+direction in allowed_tiles):
+					closest = new_tile+direction
+				else:
+					for allowed in allowed_tiles:
+						if ((allowed-new_tile).length() < dist and allowed != tile):
+							dist = (allowed-new_tile).length()
+							closest = allowed
+				_update_position(closest, false)
+				_update_mouse_used(false)
+			
 			break
 	
 	var clicked: int = -1
