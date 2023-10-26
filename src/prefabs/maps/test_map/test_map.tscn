@@ -13,21 +13,25 @@
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 0
 shader_parameter/moved = false
+shader_parameter/outline = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dxdbw"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 1
 shader_parameter/moved = false
+shader_parameter/outline = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ilcdr"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 0
 shader_parameter/moved = false
+shader_parameter/outline = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gg705"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 1
 shader_parameter/moved = false
+shader_parameter/outline = 2
 
 [node name="Map" type="TileMap"]
 z_index = -1

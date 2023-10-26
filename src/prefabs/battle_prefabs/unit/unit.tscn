@@ -8,6 +8,7 @@
 shader = ExtResource("1_qml7y")
 shader_parameter/player = 0
 shader_parameter/moved = false
+shader_parameter/outline = 2
 
 [node name="Unit" type="AnimatedSprite2D"]
 texture_filter = 1
