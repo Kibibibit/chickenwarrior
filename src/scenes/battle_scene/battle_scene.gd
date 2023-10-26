@@ -99,6 +99,7 @@ func _select_unit(unit: Unit) -> void:
 	unit.move_finished.connect(_unit_move_finished.bind(unit))
 
 func _deselect_unit(unit: Unit) -> void:
+	unit.unhighlight()
 	selected_unit_id = Constants.NULL_ID
 	tile_highlight.clear_highlight()
 	battle_state = STATE_PLAYER_TURN
@@ -123,6 +124,7 @@ func _action_selected(action: int) -> void:
 			print("Unrecognised action %s (%s)" % [action, Unit.get_action_label(action)])
 		cursor.can_move = true
 		unit.position = unit_start_pos*Map.TILE_SIZE
+		unit.highlight()
 		battle_state = STATE_PLAYER_UNIT_SELECTED
 
 func _attack_action_selected(unit: Unit) -> void:
@@ -214,7 +216,16 @@ func _cursor_action_player_attack_select(action: int) -> void:
 
 
 func _cursor_moved_player_turn_state(tile: Vector2i) -> void:
-	ui.set_unit(_unit_at(tile))
+	var unit: Unit = _unit_at(tile)
+	ui.set_unit(unit)
+	if (unit != null):
+		if (unit.team == Teams.PLAYER):
+			unit.highlight()
+	else:
+		for unit_id in units:
+			var u: Unit = units[unit_id]
+			u.unhighlight()
+	
 
 func _cursor_moved_player_unit_selected_state(tile: Vector2i) -> void:
 	var unit: Unit = instance_from_id(selected_unit_id)

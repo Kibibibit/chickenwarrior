@@ -1,6 +1,6 @@
 @icon("res://assets/icons/unit.png")
 @tool
-extends Sprite2D
+extends AnimatedSprite2D
 class_name Unit
 
 const ACTION_NONE: int = -1
@@ -23,7 +23,7 @@ const TEAM_PLAYER: int = 0
 const TEAM_ENEMY: int = 1
 const TEAM_ALLY: int = 2
 
-const UNIT_MOVE_SPEED: int = 500
+const UNIT_MOVE_SPEED: int = 400
 
 
 signal move_finished
@@ -60,7 +60,12 @@ func _ready() -> void:
 	material.set_shader_parameter("player", team)
 	hp = character.get_max_hp()
 	
-	
+
+func highlight() -> void:
+	play("highlight")
+
+func unhighlight() -> void:
+	play("default")
 
 func get_unit_type() -> int:
 	return character.get_unit_type()
@@ -204,7 +209,23 @@ func get_predicted_damage(enemy: Unit) -> int:
 	print(get_hit_chance(enemy),"% to hit")
 	print(get_crit_chance(enemy), "% to crit")
 	return get_attack_count(enemy)*get_damage_per_attack(enemy)
-	
+
+
+func _set_walk_animation(direction:Vector2i) -> void:
+	var anim: StringName = "default"
+	flip_h = false
+	match direction:
+		Vector2i.DOWN:
+			anim = "walk_backwards"
+		Vector2i.LEFT:
+			anim = "walk_sideways"
+		Vector2i.RIGHT:
+			flip_h = true
+			anim = "walk_sideways"
+		Vector2i.UP:
+			anim = "walk_forward"
+	if (animation != anim):
+		play(anim)
 
 func _process(delta) -> void:
 	if (not _path.is_empty()):
@@ -212,8 +233,10 @@ func _process(delta) -> void:
 			_path.remove_at(0)
 		if (not _path.is_empty()):
 			var next_pos = _path[0]*Map.TILE_SIZE
+			var last_pos: Vector2 = position
 			position.x = move_toward(position.x, next_pos.x, delta*UNIT_MOVE_SPEED)
 			position.y = move_toward(position.y, next_pos.y, delta*UNIT_MOVE_SPEED)
+			_set_walk_animation(Vector2i((last_pos-position).normalized()))
 		else:
 			move_finished.emit()
 
