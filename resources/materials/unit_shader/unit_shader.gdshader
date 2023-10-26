@@ -47,7 +47,7 @@ void fragment() {
 		color = vec3(red, green, blue);
 
 		if (moved) {
-			COLOR.rgb =  color * 0.5;
+			COLOR.rgb =  color * 0.4;
 		} else {
 			COLOR.rgb = color;
 		}
@@ -59,7 +59,7 @@ void fragment() {
 			totalA += texture(TEXTURE, UV+(TEXTURE_PIXEL_SIZE*neighbours[i])).a;
 		}
 		if (totalA > 0.0) {
-			COLOR.a = 1.0;
+			COLOR.a = 0.8;
 			COLOR.rgb = vec3(0.0);
 		}
 	}
