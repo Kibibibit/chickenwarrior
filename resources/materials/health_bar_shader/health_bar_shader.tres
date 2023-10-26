@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cq8fjar5v43ta"]
+
+[ext_resource type="Shader" path="res://resources/materials/health_bar_shader/health_bar_shader.gdshader" id="1_xfr71"]
+
+[resource]
+shader = ExtResource("1_xfr71")
+shader_parameter/health = 10
+shader_parameter/max_health = 10
+shader_parameter/no_health_color = Color(1, 0, 0, 1)
+shader_parameter/full_health_color = Color(0, 0.5, 1, 1)
