@@ -219,7 +219,7 @@ func _cursor_moved_player_turn_state(tile: Vector2i) -> void:
 	var unit: Unit = _unit_at(tile)
 	ui.set_unit(unit)
 	if (unit != null):
-		if (unit.team == Teams.PLAYER):
+		if (unit.team == Teams.PLAYER and not unit.moved):
 			unit.highlight()
 	else:
 		for unit_id in units:
