@@ -56,8 +56,6 @@ func _ready() -> void:
 		unit_positions[unit.tile] = unit.get_instance_id()
 		unit.current_tile_type = map.get_tile_type(unit.tile)
 
-
-
 func _unit_at(tile: Vector2i) -> Unit:
 	if tile in unit_positions:
 		return units[unit_positions[tile]]
@@ -161,6 +159,8 @@ func _move_unit(unit: Unit) -> void:
 	unit_positions[cursor.tile] = unit.get_instance_id()
 	unit.current_tile_type = map.get_tile_type(cursor.tile)
 	unit.moved = true
+	for u in units.values():
+		u.unhighlight()
 		
 func _cursor_action_player_turn_state(action: int) -> void:
 	var unit: Unit = _unit_at(cursor.tile)
