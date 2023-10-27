@@ -21,3 +21,4 @@ name = "Rapier"
 breakable = true
 max_uses = 40
 icon = ExtResource("1_wc68k")
+item_id = &"weapon_sword_rapier"

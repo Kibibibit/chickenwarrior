@@ -8,6 +8,8 @@
 extends Item
 class_name Weapon
 
+const UNARMED: int = -1
+
 ## The id for a sword weapon type. Equal to 0
 const SWORD: int = 0
 ## The id for a lance weapon type. Equal to 1
@@ -44,7 +46,7 @@ const RANK_A: int = 4
 const RANK_S: int = 5
 
 ## The type of this weapon. Should be one of [SWORD], [LANCE], [AXE], ... and so on.
-@export_enum("Sword", "Lance", "Axe", "Bow") var weapon_type: int : set = _set_weapon_type
+@export_enum("Unarmed:-1","Sword:0", "Lance:1", "Axe:2", "Bow:3") var weapon_type: int = SWORD : set = _set_weapon_type
 ## The base stat that this weapon uses to calculate the attack stat. Should be on of [BASE_STRENGTH], [BASE_MAGIC] and so on.
 @export_enum("Strength", "Magic") var base_stat: int
 ## The base damage of this weapon, modified by the base stat of the unit using it.

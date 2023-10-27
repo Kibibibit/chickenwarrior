@@ -7,6 +7,8 @@ class_name Item
 @export var breakable: bool = true
 @export var max_uses: int
 @export var icon: CompressedTexture2D
+@export var item_id: StringName
+
 var uses: int = max_uses
 
 func _set_name(p_name: String) -> void:

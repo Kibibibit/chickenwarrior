@@ -21,3 +21,4 @@ name = "Iron Lance"
 breakable = true
 max_uses = 30
 icon = ExtResource("1_22bke")
+item_id = &"weapon_lance_iron"

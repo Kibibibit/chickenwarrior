@@ -10,3 +10,4 @@ name = "Vulnerary"
 breakable = true
 max_uses = 3
 icon = ExtResource("1_khue8")
+item_id = &"item_vulnerary"

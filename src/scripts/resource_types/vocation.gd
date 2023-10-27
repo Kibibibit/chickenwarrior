@@ -40,6 +40,8 @@ func _set_name(p_name: String) -> void:
 
 ## Returns true if this vocation can use the passed weapon type
 func is_weapon_type_useable(weapon_type: int) -> bool:
+	if (weapon_type == -1):
+		return true
 	var mask: int = roundi(pow(2, weapon_type))
 	return useable_weapons & mask > 0
 

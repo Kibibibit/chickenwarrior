@@ -21,3 +21,4 @@ name = "Iron Axe"
 breakable = true
 max_uses = 45
 icon = ExtResource("1_lccqi")
+item_id = &"weapon_axe_iron"

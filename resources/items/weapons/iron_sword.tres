@@ -21,3 +21,4 @@ name = "Iron Sword"
 breakable = true
 max_uses = 40
 icon = ExtResource("1_c5kju")
+item_id = &"weapon_sword_iron"
