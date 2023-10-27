@@ -49,7 +49,7 @@ const CORNER_POINTS: Dictionary = {
 }
 
 
-var _arrow_texture: CompressedTexture2D = preload("res://assets/arrows.png")
+var _arrow_texture: CompressedTexture2D = preload("res://assets/arrows2x.png")
 var _start_point: Vector2i
 var map: Map
 var path: Array[Vector2i]

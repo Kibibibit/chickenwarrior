@@ -23,7 +23,7 @@ const TEAM_PLAYER: int = 0
 const TEAM_ENEMY: int = 1
 const TEAM_ALLY: int = 2
 
-const UNIT_MOVE_SPEED: int = 400
+const UNIT_MOVE_SPEED: int = 700
 
 
 signal move_finished

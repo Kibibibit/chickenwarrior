@@ -1,9 +1,9 @@
-extends Sprite2D
+extends AnimatedSprite2D
 class_name Cursor
 
 const SELECT: int = 0
 const DESELECT: int = 1
-const CURSOR_SPEED: int = 350
+const CURSOR_SPEED: int = 700
 
 signal cursor_moved(tile: Vector2i)
 signal cursor_action(action_type: int)
@@ -77,7 +77,7 @@ func _update_position(new_tile: Vector2i, used_mouse: bool):
 			cursor_moved.emit(tile)
 
 func _floor_position(vector: Vector2) -> Vector2i:
-	vector /= 16
+	vector /= Map.TILE_SIZE
 	vector = vector.floor()
 	return vector
 
@@ -88,5 +88,9 @@ func _update_mouse_used(using_mouse: bool)->void:
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 func _process(delta: float) -> void:
+	if (position.is_equal_approx(tile*Map.TILE_SIZE)):
+		frame = 0
+	else:
+		frame = 1
 	position.x = move_toward(position.x, tile.x * Map.TILE_SIZE, delta*CURSOR_SPEED)
 	position.y = move_toward(position.y, tile.y * Map.TILE_SIZE, delta*CURSOR_SPEED)

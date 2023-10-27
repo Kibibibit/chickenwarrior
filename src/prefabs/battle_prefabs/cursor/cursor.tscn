@@ -1,10 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://bm4bfgp3fbrmf"]
 
-[ext_resource type="Texture2D" uid="uid://lx5v8d30dngl" path="res://assets/map_icons.png" id="1_peqvn"]
+[ext_resource type="SpriteFrames" uid="uid://utsc716b2psc" path="res://resources/sprite_frames/cursor_frames.tres" id="1_x71td"]
 
-[node name="Cursor" type="Sprite2D"]
+[node name="Cursor" type="AnimatedSprite2D"]
 texture_filter = 1
-texture = ExtResource("1_peqvn")
+sprite_frames = ExtResource("1_x71td")
 centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)

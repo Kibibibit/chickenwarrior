@@ -3,12 +3,12 @@ class_name TileHighlight
 
 
 var map: Map
-var _map_icons_texture: CompressedTexture2D = preload("res://assets/map_icons.png")
+var _map_icons_texture: CompressedTexture2D = preload("res://assets/tile_highlights.png")
 var _transparent_material: ShaderMaterial = preload("res://resources/materials/transparent/transparent_material.tres").duplicate()
 var get_cost_callback: Callable
 
-var _move_region: Rect2i = Rect2i(0,Map.TILE_SIZE,Map.TILE_SIZE, Map.TILE_SIZE)
-var _attack_region: Rect2i = Rect2i(Map.TILE_SIZE*2,Map.TILE_SIZE,Map.TILE_SIZE, Map.TILE_SIZE)
+var _move_region: Rect2i = Rect2i(0,0,Map.TILE_SIZE, Map.TILE_SIZE)
+var _attack_region: Rect2i = Rect2i(Map.TILE_SIZE*2,0,Map.TILE_SIZE, Map.TILE_SIZE)
 
 func get_move_tiles(unit: Unit, unit_positions: Dictionary) -> Array[Vector2i]:
 	var cost_map: Dictionary = {

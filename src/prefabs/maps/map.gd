@@ -1,7 +1,7 @@
 extends TileMap
 class_name Map
 
-const TILE_SIZE: int = 16
+const TILE_SIZE: int = 32
 
 @onready
 var _unit_parent = $Units

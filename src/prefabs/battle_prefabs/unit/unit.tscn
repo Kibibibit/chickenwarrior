@@ -4,7 +4,7 @@
 [ext_resource type="SpriteFrames" uid="uid://gvsnhenop7j7" path="res://resources/sprite_frames/chicken_map.tres" id="2_2h1k5"]
 [ext_resource type="Script" path="res://src/prefabs/battle_prefabs/unit/unit.gd" id="2_2len0"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g8y1g"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dh1ip"]
 shader = ExtResource("1_qml7y")
 shader_parameter/player = 0
 shader_parameter/moved = false
@@ -12,7 +12,7 @@ shader_parameter/outline = 2
 
 [node name="Unit" type="AnimatedSprite2D"]
 texture_filter = 1
-material = SubResource("ShaderMaterial_g8y1g")
+material = SubResource("ShaderMaterial_dh1ip")
 sprite_frames = ExtResource("2_2h1k5")
 centered = false
 script = ExtResource("2_2len0")
