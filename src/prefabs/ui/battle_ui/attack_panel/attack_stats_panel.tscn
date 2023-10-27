@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=3 uid="uid://f187x22hv7ct"]
+
+[ext_resource type="Script" path="res://src/prefabs/ui/battle_ui/attack_panel/attack_stats_panel.gd" id="1_njstl"]
+
+[node name="AttackStatsPanel" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_njstl")
+
+[node name="MainHBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.5
+offset_right = 69.5
+offset_bottom = 86.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="MainGrid" type="GridContainer" parent="MainHBox"]
+layout_mode = 2
+columns = 3
+
+[node name="PlayerAttack" type="Label" parent="MainHBox/MainGrid"]
+layout_mode = 2
+text = "XX x2"
+horizontal_alignment = 2
+
+[node name="AttackLabel" type="Label" parent="MainHBox/MainGrid"]
+layout_mode = 2
+text = "At"
+horizontal_alignment = 1
+
+[node name="EnemyAttack" type="Label" parent="MainHBox/MainGrid"]
+layout_mode = 2
+text = "XX x2"
+
+[node name="PlayerHit" type="Label" parent="MainHBox/MainGrid"]
+layout_mode = 2
+text = "XX%"
+horizontal_alignment = 2
+
+[node name="HitLabel" type="Label" parent="MainHBox/MainGrid"]
+layout_mode = 2
+text = "Hit"
+horizontal_alignment = 1
+
+[node name="EnemyHit" type="Label" parent="MainHBox/MainGrid"]
+layout_mode = 2
+text = "XX%"
+
+[node name="PlayerCrit" type="Label" parent="MainHBox/MainGrid"]
+layout_mode = 2
+text = "XX%"
+horizontal_alignment = 2
+
+[node name="CritLabel" type="Label" parent="MainHBox/MainGrid"]
+layout_mode = 2
+text = "  Crit  "
+horizontal_alignment = 1
+
+[node name="EnemyCrit" type="Label" parent="MainHBox/MainGrid"]
+layout_mode = 2
+text = "XX%"

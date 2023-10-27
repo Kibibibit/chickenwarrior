@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://dc7eb13t7v0ra"]
+
+[ext_resource type="Script" path="res://src/prefabs/ui/battle_ui/attack_panel/unit_display.gd" id="1_m3xqc"]
+[ext_resource type="SpriteFrames" uid="uid://gvsnhenop7j7" path="res://resources/sprite_frames/chicken_map.tres" id="1_p5qt1"]
+[ext_resource type="Material" uid="uid://cq8fjar5v43ta" path="res://resources/materials/health_bar_shader/health_bar_shader.tres" id="3_1me4v"]
+[ext_resource type="Texture2D" uid="uid://bk87y5ogqdh7d" path="res://assets/icons/weapon.png" id="3_l47ru"]
+
+[node name="UnitDisplay" type="Panel"]
+texture_filter = 1
+custom_minimum_size = Vector2(96, 108)
+script = ExtResource("1_m3xqc")
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -51.0
+offset_right = 32.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="MainVBox/HBoxContainer2"]
+clip_contents = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="UnitSprite" type="AnimatedSprite2D" parent="MainVBox/HBoxContainer2/AspectRatioContainer"]
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("1_p5qt1")
+centered = false
+
+[node name="HealthBar" type="ColorRect" parent="MainVBox"]
+material = ExtResource("3_1me4v")
+custom_minimum_size = Vector2(64, 8)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox"]
+layout_mode = 2
+
+[node name="WeaponIcon" type="TextureRect" parent="MainVBox/HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_l47ru")
+stretch_mode = 2
+
+[node name="WeaponLabel" type="Label" parent="MainVBox/HBoxContainer"]
+layout_mode = 2
+text = "Weapon"

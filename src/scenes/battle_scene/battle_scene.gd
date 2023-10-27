@@ -51,10 +51,20 @@ func _ready() -> void:
 	tile_highlight.map = map
 	arrows.map = map
 	
+	
+	var player_unit: Unit
+	var enemy_unit: Unit
+	
 	for unit in map.get_units():
 		units[unit.get_instance_id()] = unit
 		unit_positions[unit.tile] = unit.get_instance_id()
 		unit.current_tile_type = map.get_tile_type(unit.tile)
+		if (unit.team == Teams.PLAYER):
+			player_unit = unit
+		if (unit.team == Teams.ENEMY):
+			enemy_unit = unit
+	
+	ui.show_attack_panel(player_unit, enemy_unit)
 
 
 func _unit_at(tile: Vector2i) -> Unit:

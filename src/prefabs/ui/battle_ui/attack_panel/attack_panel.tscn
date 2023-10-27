@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvt7ajicqcdhb"]
+
+[ext_resource type="Script" path="res://src/prefabs/ui/battle_ui/attack_panel/attack_panel.gd" id="1_4dj5o"]
+[ext_resource type="PackedScene" uid="uid://dc7eb13t7v0ra" path="res://src/prefabs/ui/battle_ui/attack_panel/unit_display.tscn" id="1_ep4br"]
+[ext_resource type="PackedScene" uid="uid://f187x22hv7ct" path="res://src/prefabs/ui/battle_ui/attack_panel/attack_stats_panel.tscn" id="2_gcpbr"]
+
+[node name="AttackPanel" type="Panel"]
+anchors_preset = -1
+anchor_top = 0.2
+anchor_right = 0.23
+anchor_bottom = 0.55
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4dj5o")
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AttackTitleLabel" type="Label" parent="MainVBox"]
+layout_mode = 2
+text = "Character vs Character"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox"]
+texture_filter = 1
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerUnitDisplay" parent="MainVBox/HBoxContainer" instance=ExtResource("1_ep4br")]
+layout_mode = 2
+
+[node name="VsLabel" type="Label" parent="MainVBox/HBoxContainer"]
+layout_mode = 2
+text = "VS"
+
+[node name="EnemyUnitDisplay" parent="MainVBox/HBoxContainer" instance=ExtResource("1_ep4br")]
+layout_mode = 2
+
+[node name="AttackStatsPanel" parent="MainVBox" instance=ExtResource("2_gcpbr")]
+layout_mode = 2

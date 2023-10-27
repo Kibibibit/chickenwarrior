@@ -14,11 +14,15 @@ var tile_label: Label = $CanvasLayer/InfoTiles/TilePanel/TileLabel
 var unit_panel: Panel = $CanvasLayer/InfoTiles/UnitPanel
 @onready
 var unit_label: Label = $CanvasLayer/InfoTiles/UnitPanel/UnitLabel
+@onready
+var attack_panel: AttackPanel = $CanvasLayer/InfoTiles/AttackPanel
 
 @onready
 var action_list: ActionList = $CanvasLayer/ActionList
 
-
+func _ready():
+	unit_panel.visible = false
+	attack_panel.visible = false
 
 func show_action_list(valid_actions: Array[int]) -> int:
 	return await action_list.show_actions(valid_actions)
@@ -36,6 +40,8 @@ func show_weapon_list(unit: Unit) -> Weapon:
 	return weapon
 	
 
+func show_attack_panel(player_unit: Unit, enemy_unit: Unit) -> void:
+	attack_panel.show_attack(player_unit, enemy_unit)
 
 func set_tile_type(tile_type: StringName) -> void:
 	if (tile_type == TileTypes.VOID):

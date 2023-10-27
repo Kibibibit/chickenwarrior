@@ -28,10 +28,12 @@ const UNIT_MOVE_SPEED: int = 700
 
 signal move_finished
 
+@onready var h_bar: ColorRect = $ColorRect
+
 @export var character: Character: set = _set_character
 @export_enum("Player", "Enemy", "Ally") var team: int: set = _set_team
 @export var tile: Vector2i: set = _set_tile
-@export var hp: int = 0
+@export var hp: int = 0: set = _set_hp
 var moved: bool = false : set = _set_moved
 var current_tile_type: StringName = TileTypes.VOID
 
@@ -47,6 +49,12 @@ func _set_tile(p_tile: Vector2i):
 	if (Engine.is_editor_hint()):
 		position = tile*Map.TILE_SIZE
 
+func _set_hp(p_hp: int) -> void:
+	hp = p_hp
+	if (h_bar != null):
+		h_bar.material.set_shader_parameter("health", p_hp)
+	
+
 func _set_team(p_team: int) -> void:
 	team = p_team
 	material.set_shader_parameter("player", p_team)
@@ -59,7 +67,8 @@ func _ready() -> void:
 	material = preload("res://resources/materials/unit_shader/unit_shader_material.tres").duplicate()
 	material.set_shader_parameter("player", team)
 	hp = character.get_max_hp()
-	
+	h_bar.material = h_bar.material.duplicate()
+	h_bar.material.set_shader_parameter("health", float(hp)/float(get_max_hp()))
 
 func highlight() -> void:
 	play("highlight")

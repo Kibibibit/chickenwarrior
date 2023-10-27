@@ -4,7 +4,10 @@
 
 [resource]
 shader = ExtResource("1_xfr71")
-shader_parameter/health = 10
-shader_parameter/max_health = 10
+shader_parameter/health = 0.0
+shader_parameter/lost_health = 0.0
+shader_parameter/width = 32
+shader_parameter/height = 4
+shader_parameter/delta = 0.0
 shader_parameter/no_health_color = Color(1, 0, 0, 1)
-shader_parameter/full_health_color = Color(0, 0.5, 1, 1)
+shader_parameter/full_health_color = Color(0.478431, 0.921569, 1, 1)
