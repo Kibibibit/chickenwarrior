@@ -32,6 +32,8 @@ func show_actions(p_actions: Array[int]) -> int:
 	visible = true
 	var action: int = await action_selected
 	visible = false
+	
+	await get_tree().physics_frame
 	_clear_actions()
 	return action
 

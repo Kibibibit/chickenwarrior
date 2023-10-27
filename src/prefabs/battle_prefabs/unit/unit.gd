@@ -85,6 +85,9 @@ func get_max_hp() -> int:
 func path_to(path: Array[Vector2i]) -> void:
 	_path = path.duplicate()
 
+func equip_weapon(weapon: Weapon) -> void:
+	character.equip_weapon(weapon)
+
 func get_valid_actions(new_tile: Vector2i, attack_tiles: Array[Vector2i], unit_positions: Dictionary) -> Array[int]:
 	var out: Array[int] = []
 	if (_can_use_arms()):
@@ -205,18 +208,6 @@ func get_attack_count(enemy: Unit) -> int:
 	return hit_count
 
 func get_predicted_damage(enemy: Unit) -> int:
-	var weapon: Weapon = get_equipped_weapon()
-	var weapon_name: String = "Unarmed"
-	var has_type_advantage: bool = false
-	if (weapon != null):
-		weapon_name = weapon.name
-		has_type_advantage = weapon.has_type_bonus(enemy.get_unit_type())
-	print("Using ", weapon_name)
-	if (has_type_advantage):
-		print("Type advantage! Damage times 3")
-	print(get_damage_per_attack(enemy), " dmg x",get_attack_count(enemy))
-	print(get_hit_chance(enemy),"% to hit")
-	print(get_crit_chance(enemy), "% to crit")
 	return get_attack_count(enemy)*get_damage_per_attack(enemy)
 
 

@@ -17,23 +17,29 @@ func _ready() -> void:
 
 func _clear_items() -> void:
 	for child in _vbox.get_children():
-		child.button_up.disconnect(_item_selected)
+		if (not child.disabled):
+			child.button_up.disconnect(_item_selected)
 		child.queue_free()
 		_vbox.remove_child(child)
 
-func select_item(inventory: Array[Item]) -> Item:
+func select_item(unit: Unit, can_use_only: bool = false, weapon_only: bool = false) -> Item:
 	var focused: bool = false
-	items = inventory
+	items = unit.character.inventory
 	
 	await get_tree().physics_frame
 	
 	for item in items:
-		_add_item(item, focused)
-		if (not focused):
-			focused = true
+		var can_use_item: bool = unit.character.can_use(item)
+		var is_weapon: bool = item is Weapon
+		if (not weapon_only or is_weapon):
+			_add_item(item, focused, not can_use_only or can_use_item)
+			if (not focused):
+				focused = true
 	
 	visible = true
 	var item: Item = await item_selected
+	
+	await get_tree().physics_frame
 	visible = false
 	_clear_items()
 	return item
@@ -41,11 +47,14 @@ func select_item(inventory: Array[Item]) -> Item:
 func _item_selected(action: Item) -> void:
 	item_selected.emit(action)
 
-func _add_item(item: Item, focused:bool) -> void:
+func _add_item(item: Item, focused:bool, allowed: bool = true) -> void:
 	var button: Button = Button.new()
 	button.text = item.name
 	button.icon = item.icon
-	button.button_up.connect(_item_selected.bind(item))
+	if (allowed):
+		button.button_up.connect(_item_selected.bind(item))
+	else:
+		button.disabled = true
 	button.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
 	_vbox.add_child(button)
 	if (not focused):

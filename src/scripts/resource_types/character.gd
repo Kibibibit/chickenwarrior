@@ -111,9 +111,21 @@ func _set_growth_rates(p_stats: Dictionary) -> void:
 			growth_rates[stat] = 0
 	
 
+func equip_weapon(weapon: Weapon) -> void:
+	var index: int = 0
+	var found: bool = false
+	for item in inventory:
+		if (item.get_instance_id() == weapon.get_instance_id()):
+			found = true
+			break
+		index += 1
+	if (found):
+		inventory.remove_at(index)
+		inventory.push_front(weapon)
+
 func get_equipped_weapon() -> Weapon:
 	for item in inventory:
-		if (item is Weapon):
+		if (item is Weapon && can_use(item)):
 			return item as Weapon
 	return null
 

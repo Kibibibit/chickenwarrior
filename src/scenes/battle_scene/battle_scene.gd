@@ -51,20 +51,11 @@ func _ready() -> void:
 	tile_highlight.map = map
 	arrows.map = map
 	
-	
-	var player_unit: Unit
-	var enemy_unit: Unit
-	
 	for unit in map.get_units():
 		units[unit.get_instance_id()] = unit
 		unit_positions[unit.tile] = unit.get_instance_id()
 		unit.current_tile_type = map.get_tile_type(unit.tile)
-		if (unit.team == Teams.PLAYER):
-			player_unit = unit
-		if (unit.team == Teams.ENEMY):
-			enemy_unit = unit
-	
-	ui.show_attack_panel(player_unit, enemy_unit)
+
 
 
 func _unit_at(tile: Vector2i) -> Unit:
@@ -92,6 +83,8 @@ func _cursor_moved(tile: Vector2i) -> void:
 			_cursor_moved_player_turn_state(tile)
 		STATE_PLAYER_UNIT_SELECTED:
 			_cursor_moved_player_unit_selected_state(tile)
+		STATE_PLAYER_ATTACK_SELECT:
+			_cursor_moved_player_attack_select(tile)
 		_:
 			return
 
@@ -134,22 +127,33 @@ func _action_selected(action: int) -> void:
 			print("Unrecognised action %s (%s)" % [action, Unit.get_action_label(action)])
 		cursor.can_move = true
 		unit.position = unit_start_pos*Map.TILE_SIZE
+		cursor.tile = unit.tile
+		arrows.clear_arrows()
 		unit.highlight()
 		battle_state = STATE_PLAYER_UNIT_SELECTED
 
 func _attack_action_selected(unit: Unit) -> void:
-	cursor_start_pos = cursor.tile
 	var weapon: Weapon = await ui.show_weapon_list(unit)
 	if (weapon == null):
 		_unit_move_finished(unit)
 		return
 	else:
+		unit.equip_weapon(weapon)
 		battle_state = STATE_PLAYER_ATTACK_SELECT
 		tile_highlight.clear_highlight()
 		attack_tiles = tile_highlight.get_attack_tiles_in_range(cursor.tile, weapon)
+		var filtered_tiles: Array[Vector2i] = attack_tiles.filter(_attack_unit_filter)
+		cursor_start_pos = cursor.tile
 		tile_highlight.highlight_tiles([], attack_tiles)
 		arrows.clear_arrows()
-		cursor.allowed_tiles = attack_tiles.duplicate()
+		cursor.allowed_tiles = filtered_tiles.duplicate()
+		cursor.tile = filtered_tiles[0]
+		_cursor_moved_player_attack_select(filtered_tiles[0])
+
+func _attack_unit_filter(tile: Vector2i) -> bool:
+	if (unit_positions.has(tile)):
+		return _unit_at(tile).team == Teams.ENEMY
+	return false
 
 func _move_unit(unit: Unit) -> void:
 	unit_positions.erase(unit.tile)
@@ -173,11 +177,6 @@ func _cursor_action_player_turn_state(action: int) -> void:
 	elif unit != null and action == Cursor.DESELECT:
 		# Display the stats menu
 		unit.character.print_stats()
-		for u in units.keys():
-			if (u != unit.get_instance_id()):
-				var other: Unit = units[u]
-				print(unit.character.name," vs ",other.character.name)
-				print(unit.get_predicted_damage(other), " damage\n")
 				
 
 func _cursor_action_player_unit_selected_state(action: int) -> void:
@@ -222,7 +221,10 @@ func _cursor_action_player_attack_select(action: int) -> void:
 		battle_state = STATE_PLAYER_UNIT_MOVED
 		cursor.allowed_tiles = []
 		cursor.tile = cursor_start_pos
+		ui.hide_attack_panel()
 		_attack_action_selected(unit)
+	if (action == Cursor.SELECT):
+		print(_unit_at(cursor.tile))
 
 
 func _cursor_moved_player_turn_state(tile: Vector2i) -> void:
@@ -249,4 +251,8 @@ func _cursor_moved_player_unit_selected_state(tile: Vector2i) -> void:
 	elif (tile == unit.tile):
 		arrows.clear_arrows()
 
+func _cursor_moved_player_attack_select(tile: Vector2i) -> void:
+	var enemy: Unit = _unit_at(tile)
+	var unit = _selected_unit()
+	ui.show_attack_panel(unit, enemy)
 

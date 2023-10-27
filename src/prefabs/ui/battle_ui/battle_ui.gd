@@ -30,7 +30,7 @@ func show_action_list(valid_actions: Array[int]) -> int:
 func show_weapon_list(unit: Unit) -> Weapon:
 	var item_list: UnitInventoryList = inventory_list_scene.instantiate()
 	canvas_layer.add_child(item_list)
-	var item: Item = await item_list.select_item(unit.character.inventory)
+	var item: Item = await item_list.select_item(unit, true, true)
 	var weapon: Weapon = null
 	if (item != null):
 		if (item is Weapon):
@@ -42,6 +42,9 @@ func show_weapon_list(unit: Unit) -> Weapon:
 
 func show_attack_panel(player_unit: Unit, enemy_unit: Unit) -> void:
 	attack_panel.show_attack(player_unit, enemy_unit)
+
+func hide_attack_panel() -> void:
+	attack_panel.hide_attack()
 
 func set_tile_type(tile_type: StringName) -> void:
 	if (tile_type == TileTypes.VOID):
