@@ -27,6 +27,10 @@ StatTypes="*res://src/scripts/autoloads/stat_types.gd"
 UnitTypes="*res://src/scripts/autoloads/unit_types.gd"
 TileTypes="*res://src/scripts/autoloads/tile_types.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/chicken_editor/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="mobile"

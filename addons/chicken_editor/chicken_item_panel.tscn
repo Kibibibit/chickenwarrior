@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7xynomd6w4gh"]
+
+[ext_resource type="Texture2D" uid="uid://bk87y5ogqdh7d" path="res://assets/icons/weapon.png" id="1_wc7we"]
+
+[node name="ItemPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TabBar" type="TabBar" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+tab_count = 1
+tab_0/title = "Weapons"
+tab_0/icon = ExtResource("1_wc7we")

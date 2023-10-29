@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0q8rnuswxbgt"]
+
+[ext_resource type="Script" path="res://addons/chicken_editor/chicken_panel.gd" id="1_pfh83"]
+[ext_resource type="Texture2D" uid="uid://5jrxdx20spfo" path="res://assets/icons/item.png" id="2_3x4ol"]
+[ext_resource type="Texture2D" uid="uid://xltpmafk4hn0" path="res://assets/icons/vocation.png" id="3_8dk0g"]
+[ext_resource type="Texture2D" uid="uid://dh72auj8ajrfl" path="res://assets/icons/character.png" id="4_qpamk"]
+[ext_resource type="PackedScene" uid="uid://b7xynomd6w4gh" path="res://addons/chicken_editor/chicken_item_panel.tscn" id="5_otsui"]
+
+[node name="MainPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_pfh83")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MainVBox" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TabBarContainer" type="HBoxContainer" parent="MarginContainer/MainVBox"]
+layout_mode = 2
+
+[node name="TabBar" type="TabBar" parent="MarginContainer/MainVBox/TabBarContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tab_count = 3
+tab_0/title = "Items"
+tab_0/icon = ExtResource("2_3x4ol")
+tab_1/title = "Vocations"
+tab_1/icon = ExtResource("3_8dk0g")
+tab_2/title = "Characters"
+tab_2/icon = ExtResource("4_qpamk")
+
+[node name="LoadDataButton" type="Button" parent="MarginContainer/MainVBox/TabBarContainer"]
+layout_mode = 2
+text = "Load Data"
+
+[node name="ItemPanel" parent="MarginContainer/MainVBox" instance=ExtResource("5_otsui")]
+layout_mode = 2
