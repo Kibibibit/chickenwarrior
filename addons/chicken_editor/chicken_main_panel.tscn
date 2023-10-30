@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0q8rnuswxbgt"]
+[gd_scene load_steps=8 format=3 uid="uid://b0q8rnuswxbgt"]
 
 [ext_resource type="Script" path="res://addons/chicken_editor/chicken_panel.gd" id="1_pfh83"]
 [ext_resource type="Texture2D" uid="uid://5jrxdx20spfo" path="res://assets/icons/item.png" id="2_3x4ol"]
 [ext_resource type="Texture2D" uid="uid://xltpmafk4hn0" path="res://assets/icons/vocation.png" id="3_8dk0g"]
 [ext_resource type="Texture2D" uid="uid://dh72auj8ajrfl" path="res://assets/icons/character.png" id="4_qpamk"]
 [ext_resource type="PackedScene" uid="uid://b7xynomd6w4gh" path="res://addons/chicken_editor/chicken_item_panel.tscn" id="5_otsui"]
+[ext_resource type="PackedScene" uid="uid://b4jbjxxtxnh3s" path="res://addons/chicken_editor/chicken_vocation_panel.tscn" id="6_qqkp8"]
+[ext_resource type="PackedScene" uid="uid://dysqg0rwykxmy" path="res://addons/chicken_editor/chicken_character_panel.tscn" id="7_do5pc"]
 
 [node name="MainPanel" type="Control"]
 layout_mode = 3
@@ -45,9 +47,21 @@ tab_1/icon = ExtResource("3_8dk0g")
 tab_2/title = "Characters"
 tab_2/icon = ExtResource("4_qpamk")
 
-[node name="LoadDataButton" type="Button" parent="MarginContainer/MainVBox/TabBarContainer"]
+[node name="RefreshButton" type="Button" parent="MarginContainer/MainVBox/TabBarContainer"]
 layout_mode = 2
-text = "Load Data"
+text = "Refresh"
 
-[node name="ItemPanel" parent="MarginContainer/MainVBox" instance=ExtResource("5_otsui")]
+[node name="TabChild" type="Control" parent="MarginContainer/MainVBox"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemPanel" parent="MarginContainer/MainVBox/TabChild" instance=ExtResource("5_otsui")]
+layout_mode = 1
+
+[node name="VocationPanel" parent="MarginContainer/MainVBox/TabChild" instance=ExtResource("6_qqkp8")]
+visible = false
+layout_mode = 1
+
+[node name="CharacterPanel" parent="MarginContainer/MainVBox/TabChild" instance=ExtResource("7_do5pc")]
+visible = false
+layout_mode = 1

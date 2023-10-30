@@ -28,7 +28,7 @@ func _ready():
 func show_unit(unit: Unit, lost_health: int) -> void:
 	unit_sprite.material.set_shader_parameter('player', unit.team)
 	health_bar.material.set_shader_parameter("health", float(unit.hp) / float(unit.get_max_hp()))
-	health_bar.material.set_shader_parameter("lost_health", float(lost_health)/ float(unit.get_max_hp()))
+	health_bar.material.set_shader_parameter("lost_health", float(lost_health) / float(unit.get_max_hp()))
 	var weapon: Weapon = unit.get_equipped_weapon()
 	if (weapon != null):
 		weapon_icon.visible = true

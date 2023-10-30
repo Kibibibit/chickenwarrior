@@ -9,26 +9,8 @@ class_name AttackPanel
 
 func show_attack(player_unit: Unit, enemy_unit: Unit) -> void:
 	
-	
-	
-	var distance: float = (abs(player_unit.position.x - enemy_unit.position.x) + abs(player_unit.position.y - enemy_unit.position.y)) / float(Map.TILE_SIZE)
-	var player_weapon: Weapon = player_unit.get_equipped_weapon()
-	var enemy_weapon: Weapon = enemy_unit.get_equipped_weapon()
-	var player_min_range: int = 1
-	var enemy_min_range: int = 1
-	var player_max_range: int = 1
-	var enemy_max_range: int = 1
-	if (player_weapon != null):
-		player_min_range = player_weapon.min_range
-		player_max_range = player_weapon.max_range
-	if (enemy_weapon != null):
-		enemy_min_range = enemy_weapon.min_range
-		enemy_max_range = enemy_weapon.max_range
-		
-	
-	
-	var player_in_range: bool = player_min_range <= distance and distance <= player_max_range
-	var enemy_in_range: bool = enemy_min_range <= distance and distance <= enemy_max_range
+	var player_in_range: bool = player_unit.can_attack(enemy_unit)
+	var enemy_in_range: bool = enemy_unit.can_attack(player_unit)
 
 	
 	var enemy_lost_health: int = 0 if not player_in_range else player_unit.get_predicted_damage(enemy_unit)

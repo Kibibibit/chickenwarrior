@@ -27,13 +27,25 @@ const UNIT_MOVE_SPEED: int = 700
 
 
 signal move_finished
+signal attack_hit(damage: int)
+
+
+var attacking: bool = false
+var attack_enemy_position: Vector2
+@export_range(0,1.0)
+var attack_animation_delta: float = 0.0
+var attacking_original_position: Vector2
+var attack_animation_damage: int = 0
+var attack_animation_crit: bool = false
+var attack_animation_miss: bool = false
 
 @onready var h_bar: ColorRect = $ColorRect
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @export var character: Character: set = _set_character
 @export_enum("Player", "Enemy", "Ally") var team: int: set = _set_team
 @export var tile: Vector2i: set = _set_tile
-@export var hp: int = 0: set = _set_hp
+@export var hp: int = 0
 var moved: bool = false : set = _set_moved
 var current_tile_type: StringName = TileTypes.VOID
 
@@ -49,10 +61,6 @@ func _set_tile(p_tile: Vector2i):
 	if (Engine.is_editor_hint()):
 		position = tile*Map.TILE_SIZE
 
-func _set_hp(p_hp: int) -> void:
-	hp = p_hp
-	if (h_bar != null):
-		h_bar.material.set_shader_parameter("health", p_hp)
 	
 
 func _set_team(p_team: int) -> void:
@@ -198,20 +206,28 @@ func get_base_crit_chance() -> int:
 func get_crit_chance(enemy: Unit) -> int:
 	return clampi(get_base_crit_chance() - enemy.character.get_stat(StatTypes.LUCK), 0, 100)
 
-func get_attack_count(enemy: Unit) -> int:
+
+func get_weapon_attack_count() -> int:
 	var weapon: Weapon = get_equipped_weapon()
 	var hit_count: int = 1
 	if (weapon != null):
 		hit_count = weapon.attack_count
-	if (get_attack_speed() - enemy.get_attack_speed() >= 4):
-		hit_count *= 2
 	return hit_count
 
+func get_speed_attack_count(enemy: Unit) -> int:
+	if (get_attack_speed() - enemy.get_attack_speed() >= 4):
+		return 2
+	return 1
+
+func get_attack_total_count(enemy: Unit) -> int:
+	var weapon_hit_count: int = get_weapon_attack_count()
+	return weapon_hit_count * get_speed_attack_count(enemy)
+
 func get_predicted_damage(enemy: Unit) -> int:
-	return get_attack_count(enemy)*get_damage_per_attack(enemy)
+	return get_attack_total_count(enemy)*get_damage_per_attack(enemy)
 
 
-func _set_walk_animation(direction:Vector2i) -> void:
+func set_walk_animation(direction:Vector2i) -> void:
 	var anim: StringName = "default"
 	flip_h = false
 	match direction:
@@ -228,20 +244,73 @@ func _set_walk_animation(direction:Vector2i) -> void:
 		play(anim)
 
 func _process(delta) -> void:
-	if (not _path.is_empty()):
-		if position == Vector2(_path[0]*Map.TILE_SIZE):
-			_path.remove_at(0)
+	
+	if (!Engine.is_editor_hint()):
+		var health_bar_value: float = h_bar.material.get_shader_parameter('health')
+		health_bar_value = move_toward(health_bar_value, float(hp)/float(get_max_hp()), delta*10)
+		h_bar.material.set_shader_parameter('health', clampf(health_bar_value, 0.0, 1.0))
+		material.set_shader_parameter('outline_alpha', modulate.a)
+	if (attacking):
+		position = attacking_original_position.lerp(attack_enemy_position, attack_animation_delta)
+	else:
 		if (not _path.is_empty()):
-			var next_pos = _path[0]*Map.TILE_SIZE
-			var last_pos: Vector2 = position
-			position.x = move_toward(position.x, next_pos.x, delta*UNIT_MOVE_SPEED)
-			position.y = move_toward(position.y, next_pos.y, delta*UNIT_MOVE_SPEED)
-			_set_walk_animation(Vector2i((last_pos-position).normalized()))
-		else:
-			move_finished.emit()
+			if position == Vector2(_path[0]*Map.TILE_SIZE):
+				_path.remove_at(0)
+			if (not _path.is_empty()):
+				var next_pos = _path[0]*Map.TILE_SIZE
+				var last_pos: Vector2 = position
+				position.x = move_toward(position.x, next_pos.x, delta*UNIT_MOVE_SPEED)
+				position.y = move_toward(position.y, next_pos.y, delta*UNIT_MOVE_SPEED)
+				set_walk_animation(Vector2i((last_pos-position).normalized()))
+			else:
+				move_finished.emit()
+
 
 static func get_action_label(action_code: int) -> String:
 	if (action_code in ACTION_MAP):
 		return ACTION_MAP[action_code]
 	else:
 		return "???"
+
+
+func can_attack(enemy: Unit) -> bool:
+	var distance: float = (abs(position.x - enemy.position.x) + abs(position.y - enemy.position.y)) / float(Map.TILE_SIZE)
+	var weapon: Weapon = get_equipped_weapon()
+	var min_range: int = 1
+	var max_range: int = 1
+	if (weapon != null):
+		min_range = weapon.min_range
+		max_range = weapon.max_range
+	return min_range <= distance and distance <= max_range
+
+func attack_animation(target:Vector2, damage: int, crit: bool, miss: bool) -> void:
+	attacking = true
+	attack_enemy_position = position+(target-position).normalized()*Map.TILE_SIZE
+	attacking_original_position = position
+	attack_animation_crit = crit and not miss
+	attack_animation_damage = damage
+	attack_animation_miss = miss
+
+	
+	if (crit and not miss):
+		animation_player.play("attack/attack_crit")
+	else:
+		animation_player.play("attack/attack")
+	
+	await animation_player.animation_finished
+	attacking = false
+
+func display_attack_number() -> void:
+	var damage_number: DamageNumber = DamageNumber.create(attack_animation_damage, attack_animation_crit, attack_animation_miss)
+	
+	if (not attack_animation_miss):
+		attack_hit.emit(attack_animation_damage)
+	get_parent().add_child(damage_number)
+	damage_number.label.position = attack_enemy_position
+	
+func kill() -> void:
+	if (!Engine.is_editor_hint()):
+		animation_player.play("attack/death")
+		await animation_player.animation_finished
+		get_parent().remove_child(self)
+		self.queue_free()

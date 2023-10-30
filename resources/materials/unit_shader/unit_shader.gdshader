@@ -3,6 +3,7 @@ shader_type canvas_item;
 uniform int player;
 uniform bool moved = false;
 uniform int outline = 2;
+uniform float outline_alpha = 1.0;
 
 const vec2 neighbours[12] = {
 	vec2(1.0, 0.0), 
@@ -54,12 +55,15 @@ void fragment() {
 	} else {
 		
 		int m = outline*4;
-		float totalA = 0.0;
+		bool outline_pixel = false;
 		for (int i = 0; i < m; i++) {
-			totalA += texture(TEXTURE, UV+(TEXTURE_PIXEL_SIZE*neighbours[i])).a;
+			if (texture(TEXTURE, UV+(TEXTURE_PIXEL_SIZE*neighbours[i])).a >0.0) {
+				outline_pixel = true;
+				break;
+			}
 		}
-		if (totalA > 0.0) {
-			COLOR.a = 0.8;
+		if (outline_pixel) {
+			COLOR.a = outline_alpha;
 			COLOR.rgb = vec3(0.0);
 		}
 	}

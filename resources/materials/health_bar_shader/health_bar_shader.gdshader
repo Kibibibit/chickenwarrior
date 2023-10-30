@@ -27,7 +27,7 @@ void fragment() {
 	
 	if (UV.x < px || UV.x > 1.0-px || UV.y < py || UV.y > 1.0-py) {
 		COLOR.rgb = vec3(0.0);
-	} else if (UV.x > health+lost_health) {
+	} else if (UV.x > health) {
 		COLOR.rgb = vec3(0.0);
 	} else if (UV.x > health-lost_health && UV.x < health) {
 		COLOR.rgb = lerp_v(vec3(0.0), vec3(1.0), delta);

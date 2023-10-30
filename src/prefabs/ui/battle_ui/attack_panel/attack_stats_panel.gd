@@ -16,8 +16,8 @@ func show_units(player_unit: Unit, enemy_unit: Unit, player_in_range: bool, enem
 	
 	var player_damage: int = -1 if not player_in_range else player_unit.get_damage_per_attack(enemy_unit)
 	var enemy_damage: int = -1 if not enemy_in_range else enemy_unit.get_damage_per_attack(player_unit)
-	var player_count:int = 0 if not player_in_range else player_unit.get_attack_count(enemy_unit)
-	var enemy_count:int = 0 if not enemy_in_range else enemy_unit.get_attack_count(player_unit)
+	var player_count:int = 0 if not player_in_range else player_unit.get_attack_total_count(enemy_unit)
+	var enemy_count:int = 0 if not enemy_in_range else enemy_unit.get_attack_total_count(player_unit)
 	var player_hit:int = -1 if not player_in_range else player_unit.get_hit_chance(enemy_unit)
 	var enemy_hit:int = -1 if not enemy_in_range else enemy_unit.get_hit_chance(player_unit)
 	var player_crit:int = -1 if not player_in_range else player_unit.get_crit_chance(enemy_unit)

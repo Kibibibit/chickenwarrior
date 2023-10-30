@@ -1,19 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://o0io22x7hv0"]
+[gd_scene load_steps=7 format=3 uid="uid://o0io22x7hv0"]
 
 [ext_resource type="Shader" path="res://resources/materials/unit_shader/unit_shader.gdshader" id="1_qml7y"]
 [ext_resource type="SpriteFrames" uid="uid://gvsnhenop7j7" path="res://resources/sprite_frames/chicken_map.tres" id="2_2h1k5"]
 [ext_resource type="Script" path="res://src/prefabs/battle_prefabs/unit/unit.gd" id="2_2len0"]
 [ext_resource type="Material" uid="uid://cq8fjar5v43ta" path="res://resources/materials/health_bar_shader/health_bar_shader.tres" id="4_7gvrn"]
+[ext_resource type="AnimationLibrary" uid="uid://cwpnfappbrxt2" path="res://src/prefabs/battle_prefabs/unit/unit_animations.tres" id="5_biv7v"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dh1ip"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7uhfc"]
 shader = ExtResource("1_qml7y")
 shader_parameter/player = 0
 shader_parameter/moved = false
-shader_parameter/outline = 3
+shader_parameter/outline = 2
+shader_parameter/outline_alpha = 1.0
 
 [node name="Unit" type="AnimatedSprite2D"]
 texture_filter = 1
-material = SubResource("ShaderMaterial_dh1ip")
+material = SubResource("ShaderMaterial_7uhfc")
 sprite_frames = ExtResource("2_2h1k5")
 centered = false
 script = ExtResource("2_2len0")
@@ -24,3 +26,8 @@ offset_left = 2.0
 offset_top = 31.0
 offset_right = 30.0
 offset_bottom = 35.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"attack": ExtResource("5_biv7v")
+}

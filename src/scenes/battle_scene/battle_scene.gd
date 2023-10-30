@@ -9,6 +9,7 @@ const STATE_PLAYER_UNIT_MOVED: int = 4
 const STATE_ENEMY_UNIT_SELECTED: int = 5
 const STATE_MENU_OPEN: int = 6
 const STATE_PLAYER_ATTACK_SELECT: int = 7
+const STATE_BATTLE_ANIMATION: int = 8
 
 
 var battle_state: int = STATE_PLAYER_TURN
@@ -23,8 +24,13 @@ var cursor_start_pos: Vector2i
 var move_tiles: Array[Vector2i]
 var attack_tiles: Array[Vector2i]
 
+
+
+var attacking_unit: Unit
+var defending_unit: Unit
+
 @onready
-var camera: Camera2D = $Camera2D
+var camera: BattleCamera = $Camera2D
 @onready
 var cursor: Cursor = $Cursor
 @onready
@@ -68,11 +74,25 @@ func _cursor_action(action: int) -> void:
 		STATE_PLAYER_UNIT_SELECTED:
 			_cursor_action_player_unit_selected_state(action)
 		STATE_PLAYER_ATTACK_SELECT:
-			_cursor_action_player_attack_select(action)
+			await _cursor_action_player_attack_select(action)
 		STATE_ENEMY_UNIT_SELECTED:
 			_cursor_action_enemy_unit_selected_state(action)
-		_:
-			return
+	
+func _process(_delta) -> void:
+	if (battle_state != STATE_ENEMY_TURN):
+		var all_moved: bool = true
+		for unit in units.values():
+			if (unit is Unit):
+				if (unit.team == Teams.PLAYER && not unit.moved):
+					all_moved = false
+					break
+		if (all_moved):
+			cursor.can_move = false
+			cursor.visible = false
+			for unit in units.values():
+				unit.moved = false
+			battle_state = STATE_ENEMY_TURN
+			run_enemy_turn()
 
 func _cursor_moved(tile: Vector2i) -> void:
 	ui.set_tile_type(map.get_tile_type(tile))
@@ -177,7 +197,6 @@ func _cursor_action_player_turn_state(action: int) -> void:
 	elif unit != null and action == Cursor.DESELECT:
 		# Display the stats menu
 		unit.character.print_stats()
-				
 
 func _cursor_action_player_unit_selected_state(action: int) -> void:
 	var unit: Unit = _selected_unit()
@@ -191,12 +210,10 @@ func _cursor_action_player_unit_selected_state(action: int) -> void:
 		battle_state = STATE_PLAYER_UNIT_MOVED
 		if (unit.tile == cursor.tile):
 			_unit_move_finished(unit)
-		
 
 func _unit_move_finished(unit: Unit) -> void:
 	var action: int = await ui.show_action_list(unit.get_valid_actions(cursor.tile, attack_tiles, unit_positions))
 	_action_selected(action)
-
 
 func _cursor_action_enemy_unit_selected_state(action: int) -> void:
 	var unit: Unit = instance_from_id(selected_unit_id)
@@ -224,8 +241,27 @@ func _cursor_action_player_attack_select(action: int) -> void:
 		ui.hide_attack_panel()
 		_attack_action_selected(unit)
 	if (action == Cursor.SELECT):
-		print(_unit_at(cursor.tile))
-
+		attacking_unit = unit
+		defending_unit = _unit_at(cursor.tile)
+		tile_highlight.clear_highlight()
+		cursor.allowed_tiles=[]
+		cursor.tile = cursor_start_pos
+		cursor.visible = false
+		ui.hide_attack_panel()
+		move_tiles = []
+		attack_tiles = []
+		battle_state = STATE_BATTLE_ANIMATION
+		await _battle_animation_play()
+		_move_unit(unit)
+		_deselect_unit(unit)
+		if (unit.hp <= 0):
+			await kill_unit(unit)
+		else:
+			unit.moved = true
+		cursor.visible = true
+		cursor.can_move = true
+		
+		battle_state = STATE_PLAYER_TURN
 
 func _cursor_moved_player_turn_state(tile: Vector2i) -> void:
 	var unit: Unit = _unit_at(tile)
@@ -255,4 +291,132 @@ func _cursor_moved_player_attack_select(tile: Vector2i) -> void:
 	var enemy: Unit = _unit_at(tile)
 	var unit = _selected_unit()
 	ui.show_attack_panel(unit, enemy)
+	var direction = Vector2i((unit.position - enemy.position).normalized())
+	if (direction.x != 0 && direction.y != 0):
+		direction.y = 0
+	unit.set_walk_animation(direction)
 
+
+func _direction(a: Unit, b:Unit) -> Vector2i:
+	var direction = Vector2i((a.position - b.position).normalized())
+	if (direction.x != 0 && direction.y != 0):
+		direction.y = 0
+	return direction
+
+func _battle_animation_play() -> void:
+	
+	attacking_unit.set_walk_animation(_direction(attacking_unit, defending_unit))
+	defending_unit.set_walk_animation(_direction(defending_unit, attacking_unit))
+	
+	var attacks: Array[int] = []
+	var attackers: Array[bool] = []
+	var attack_crits: Array[bool] = []
+	
+	var attacker_attacks_per_attack = attacking_unit.get_weapon_attack_count()
+	var attacker_attack_sets = attacking_unit.get_speed_attack_count(defending_unit)
+	
+	if (not attacking_unit.can_attack(defending_unit)):
+		attacker_attack_sets = 0
+	
+	var defender_attacks_per_attack = defending_unit.get_weapon_attack_count()
+	var defender_attack_sets = defending_unit.get_speed_attack_count(attacking_unit)
+	
+	if (not defending_unit.can_attack(attacking_unit)):
+		defender_attack_sets = 0
+	
+	var attacker_crit_chance = attacking_unit.get_crit_chance(defending_unit)
+	var defender_crit_chance = defending_unit.get_crit_chance(attacking_unit)
+	
+	
+	attacking_unit.attack_hit.connect(_attack_hit.bind(defending_unit))
+	defending_unit.attack_hit.connect(_attack_hit.bind(attacking_unit))
+	
+	var attacker_hp = attacking_unit.hp
+	var defender_hp = defending_unit.hp
+	
+	while (
+		(attacker_attack_sets > 0 or defender_attack_sets > 0) and
+		attacker_hp > 0 and
+		defender_hp > 0
+	 ):
+		if (attacker_attack_sets > 0):
+			for i in attacker_attacks_per_attack:
+				var damage: int = _roll_attack(attacking_unit, defending_unit)
+				var crit: bool = RNG.rn1(attacker_crit_chance)
+				attacks.append(damage)
+				attack_crits.append(crit)
+				attackers.append(true)
+				if (crit):
+					damage *= 3
+				defender_hp -= max(0, damage)
+				if (defender_hp <= 0):
+					break
+			attacker_attack_sets -= 1
+		if (defender_hp <= 0):
+			break
+		if (defender_attack_sets > 0):
+			for i in defender_attacks_per_attack:
+				var damage = _roll_attack(defending_unit, attacking_unit)
+				var crit: bool = RNG.rn1(defender_crit_chance)
+				attacks.append(damage)
+				attack_crits.append(crit)
+				if (crit):
+					damage *= 3
+				attackers.append(false)
+				attacker_hp -= max(0, damage)
+				if (attacker_hp <= 0):
+					break
+			defender_attack_sets -= 1
+	
+	for i in attacks.size():
+		var unit_a: Unit
+		var unit_b: Unit
+		if (attackers[i]):
+			unit_a = attacking_unit
+			unit_b = defending_unit
+		else:
+			unit_a = defending_unit
+			unit_b = attacking_unit
+		var damage: int = attacks[i]
+		var miss: bool = damage < 0
+		var crit: bool = attack_crits[i] and not miss
+		
+		if (miss):
+			damage = 0
+		if (crit):
+			damage *= 3
+		if (crit):
+			camera.trigger_screen_shake(4)
+		await unit_a.attack_animation(unit_b.position, damage, crit, miss)
+	attacking_unit.attack_hit.disconnect(_attack_hit)
+	defending_unit.attack_hit.disconnect(_attack_hit)
+	attacking_unit.unhighlight()
+	defending_unit.unhighlight()
+	
+	if (selected_unit_id != attacking_unit.get_instance_id()):
+		if (attacking_unit.hp <= 0):
+			await kill_unit(attacking_unit)
+	if (selected_unit_id != defending_unit.get_instance_id()):
+		if (defending_unit.hp <= 0):
+			await kill_unit(defending_unit)
+
+func _roll_attack(unit_a: Unit, unit_b: Unit) -> int:
+	var hits: bool = RNG.rn2(unit_a.get_hit_chance(unit_b))
+	if (!hits):
+		return -1 
+	
+	return unit_a.get_damage_per_attack(unit_b)
+
+func _attack_hit(damage: int, unit: Unit) -> void:
+	unit.hp -= damage
+
+func run_enemy_turn() -> void:
+	print("ENEMY TURN")
+	battle_state = STATE_PLAYER_TURN
+	cursor.can_move = true
+	cursor.visible = true
+
+func kill_unit(unit):
+	units.erase(unit.get_instance_id())
+	unit_positions.erase(unit.tile)
+	await unit.kill()
