@@ -25,6 +25,7 @@ const TEAM_ALLY: int = 2
 
 const UNIT_MOVE_SPEED: int = 700
 
+const _damage_number_scene: PackedScene = preload("res://src/prefabs/battle_prefabs/damage_number/damage_number.tscn")
 
 signal move_finished
 signal attack_hit(damage: int)
@@ -74,9 +75,10 @@ func _set_moved(p_moved: bool) -> void:
 func _ready() -> void:
 	material = preload("res://resources/materials/unit_shader/unit_shader_material.tres").duplicate()
 	material.set_shader_parameter("player", team)
-	hp = character.get_max_hp()
-	h_bar.material = h_bar.material.duplicate()
-	h_bar.material.set_shader_parameter("health", float(hp)/float(get_max_hp()))
+	if (character != null):
+		hp = character.get_max_hp()
+		h_bar.material = h_bar.material.duplicate()
+		h_bar.material.set_shader_parameter("health", float(hp)/float(get_max_hp()))
 
 func highlight() -> void:
 	play("highlight")
@@ -301,7 +303,8 @@ func attack_animation(target:Vector2, damage: int, crit: bool, miss: bool) -> vo
 	attacking = false
 
 func display_attack_number() -> void:
-	var damage_number: DamageNumber = DamageNumber.create(attack_animation_damage, attack_animation_crit, attack_animation_miss)
+	var damage_number: DamageNumber = _damage_number_scene.instantiate()
+	damage_number.init(attack_animation_damage, attack_animation_crit, attack_animation_miss)
 	
 	if (not attack_animation_miss):
 		attack_hit.emit(attack_animation_damage)

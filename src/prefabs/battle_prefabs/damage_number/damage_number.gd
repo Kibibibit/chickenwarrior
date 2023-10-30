@@ -1,9 +1,6 @@
 extends Control
 class_name DamageNumber
 
-const _RESOURCE: PackedScene = preload("res://src/prefabs/battle_prefabs/damage_number/damage_number.tscn")
-
-
 var _damage: int
 var _crit: bool
 var _miss: bool
@@ -24,13 +21,10 @@ func _ready():
 		label.text = "%s" % _damage
 	animation_player.play("damage_number_animations/damage_number_rise_animation")
 
-static func create(damage: int, crit: bool, miss: bool) -> DamageNumber:
-	var out: DamageNumber = _RESOURCE.instantiate()
-	out._damage = damage
-	out._crit = crit
-	out._miss = miss
-	return out
-
+func init(damage: int, crit: bool, miss: bool) -> void:
+	_damage = damage
+	_crit = crit
+	_miss = miss
 
 
 func on_finish_animation() -> void:
