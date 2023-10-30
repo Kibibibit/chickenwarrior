@@ -22,7 +22,7 @@ func _ready():
 		if (_crit):
 			label.add_theme_color_override("font_color", Color.RED)
 		label.text = "%s" % _damage
-	animation_player.play("rise")
+	animation_player.play("damage_number_animations/damage_number_rise_animation")
 
 static func create(damage: int, crit: bool, miss: bool) -> DamageNumber:
 	var out: DamageNumber = _RESOURCE.instantiate()

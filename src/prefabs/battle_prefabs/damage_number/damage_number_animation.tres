@@ -1,3 +1,8 @@
-[gd_resource type="AnimationLibrary" format=3 uid="uid://rhkkfk4mcyti"]
+[gd_resource type="AnimationLibrary" load_steps=2 format=3 uid="uid://rhkkfk4mcyti"]
+
+[ext_resource type="Animation" uid="uid://cdb0yttap3axt" path="res://src/prefabs/battle_prefabs/damage_number/damage_number_rise_animation.tres" id="1_qmaqm"]
 
 [resource]
+_data = {
+"damage_number_rise_animation": ExtResource("1_qmaqm")
+}

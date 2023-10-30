@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://cq8fjar5v43ta" path="res://resources/materials/health_bar_shader/health_bar_shader.tres" id="4_7gvrn"]
 [ext_resource type="AnimationLibrary" uid="uid://cwpnfappbrxt2" path="res://src/prefabs/battle_prefabs/unit/unit_animations.tres" id="5_biv7v"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7uhfc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sk5dw"]
 shader = ExtResource("1_qml7y")
 shader_parameter/player = 0
 shader_parameter/moved = false
@@ -15,7 +15,7 @@ shader_parameter/outline_alpha = 1.0
 
 [node name="Unit" type="AnimatedSprite2D"]
 texture_filter = 1
-material = SubResource("ShaderMaterial_7uhfc")
+material = SubResource("ShaderMaterial_sk5dw")
 sprite_frames = ExtResource("2_2h1k5")
 centered = false
 script = ExtResource("2_2len0")

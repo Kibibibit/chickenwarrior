@@ -1,61 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2lqmwlrhh4di"]
+[gd_scene load_steps=4 format=3 uid="uid://bo7legvnfxic8"]
 
-[ext_resource type="Script" path="res://src/prefabs/battle_prefabs/damage_number/damage_number.gd" id="1_51fai"]
-
-[sub_resource type="FontVariation" id="FontVariation_16tpf"]
-variation_embolden = 1.4
-variation_transform = Transform2D(1, 0.25, 0, 1, 0, 0)
-
-[sub_resource type="Animation" id="Animation_0e12y"]
-resource_name = "rise"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.5, 0.5),
-"update": 0,
-"values": [Vector2(0, -16), Vector2(0, -32)]
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate:a")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5, 1)
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"on_finish_animation"
-}]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_bnvt7"]
-_data = {
-"rise": SubResource("Animation_0e12y")
-}
+[ext_resource type="Script" path="res://src/prefabs/battle_prefabs/damage_number/damage_number.gd" id="1_3yhjm"]
+[ext_resource type="FontVariation" uid="uid://d2vidvchntc6v" path="res://src/prefabs/battle_prefabs/damage_number/damage_number_font_var.tres" id="2_vdkg2"]
+[ext_resource type="AnimationLibrary" uid="uid://rhkkfk4mcyti" path="res://src/prefabs/battle_prefabs/damage_number/damage_number_animation.tres" id="3_h5oxv"]
 
 [node name="DamageNumber" type="Control"]
-texture_filter = 1
 layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_51fai")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3yhjm")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -63,11 +21,11 @@ offset_right = 40.0
 offset_bottom = 26.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
-theme_override_fonts/font = SubResource("FontVariation_16tpf")
+theme_override_fonts/font = ExtResource("2_vdkg2")
 text = "10"
 horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_bnvt7")
+"damage_number_animations": ExtResource("3_h5oxv")
 }
