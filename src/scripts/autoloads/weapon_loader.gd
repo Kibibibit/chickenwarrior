@@ -30,6 +30,8 @@ func get_weapon(weapon_id: StringName) -> Weapon:
 		push_warning("Unknown weapon_id %s, returning unarmed" % weapon_id)
 		return unarmed
 
+func is_weapon(weapon_id: StringName) -> bool:
+	return weapon_id in _weapon_dict
 
 func _create_unarmed() -> void:
 	unarmed = Weapon.new()

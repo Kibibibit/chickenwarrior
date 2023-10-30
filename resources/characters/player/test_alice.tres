@@ -11,6 +11,7 @@ script = ExtResource("1_xq0eu")
 name = "TestAlice"
 vocation = ExtResource("5_8nm56")
 inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("3_5g2fi"), ExtResource("2_xxkro")])
+experiment_inventory = Array[Resource("res://src/scripts/objects/inventory_item.gd")]([])
 level = 1
 xp = 0
 stats = {
