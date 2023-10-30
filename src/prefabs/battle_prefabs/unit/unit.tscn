@@ -21,7 +21,6 @@ centered = false
 script = ExtResource("2_2len0")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 material = ExtResource("4_7gvrn")
 offset_left = 2.0
 offset_top = 31.0

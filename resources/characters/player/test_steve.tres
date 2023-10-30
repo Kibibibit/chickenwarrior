@@ -1,16 +1,17 @@
-[gd_resource type="Resource" script_class="Character" load_steps=5 format=3 uid="uid://cuknc7mc3uewy"]
+[gd_resource type="Resource" script_class="Character" load_steps=6 format=3 uid="uid://cuknc7mc3uewy"]
 
 [ext_resource type="Script" path="res://src/scripts/resource_types/character.gd" id="1_b5jpm"]
 [ext_resource type="Resource" uid="uid://ca6tmqlq11c5d" path="res://resources/items/weapons/iron_lance.tres" id="1_njqho"]
 [ext_resource type="Resource" uid="uid://dkxxw1gqwe1fn" path="res://resources/vocations/cavalier.tres" id="2_owy5m"]
 [ext_resource type="Resource" uid="uid://b7kw2prkn2w8b" path="res://resources/items/weapons/iron_sword.tres" id="2_us8v2"]
+[ext_resource type="Resource" uid="uid://b8m0msy8mm3v6" path="res://resources/items/weapons/killing_edge.tres" id="3_f668i"]
 
 [resource]
 resource_name = "TestSteve"
 script = ExtResource("1_b5jpm")
 name = "TestSteve"
 vocation = ExtResource("2_owy5m")
-inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("1_njqho"), ExtResource("2_us8v2")])
+inventory = Array[Resource("res://src/scripts/resource_types/item.gd")]([ExtResource("1_njqho"), ExtResource("2_us8v2"), ExtResource("3_f668i")])
 level = 1
 xp = 0
 stats = {
@@ -20,7 +21,7 @@ stats = {
 "stat_luck": 5,
 "stat_magic": 7,
 "stat_resistance": 6,
-"stat_speed": 7,
+"stat_speed": 12,
 "stat_strength": 8
 }
 growth_rates = {

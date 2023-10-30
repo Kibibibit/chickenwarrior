@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=3 format=3 uid="uid://b8m0msy8mm3v6"]
+
+[ext_resource type="Texture2D" uid="uid://bk87y5ogqdh7d" path="res://assets/icons/weapon.png" id="1_5m5us"]
+[ext_resource type="Script" path="res://src/scripts/resource_types/weapon.gd" id="1_club7"]
+
+[resource]
+resource_name = "Killing Edge"
+script = ExtResource("1_club7")
+weapon_type = 0
+base_stat = 0
+might = 7
+hit_chance = 95
+crit_chance = 50
+weight = 3
+min_rank = 2
+attack_count = 1
+type_bonuses = 0
+min_range = 1
+max_range = 1
+name = "Killing Edge"
+breakable = true
+max_uses = 30
+icon = ExtResource("1_5m5us")
+item_id = &"weapon_sword_killer"

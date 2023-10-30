@@ -27,10 +27,10 @@ func _ready():
 func show_action_list(valid_actions: Array[int]) -> int:
 	return await action_list.show_actions(valid_actions)
 
-func show_weapon_list(unit: Unit) -> Weapon:
+func show_weapon_list(unit: Unit, from: Vector2i, enemies: Array[Unit]) -> Weapon:
 	var item_list: UnitInventoryList = inventory_list_scene.instantiate()
 	canvas_layer.add_child(item_list)
-	var item: Item = await item_list.select_item(unit, true, true)
+	var item: Item = await item_list.select_item(unit, true, true, from, enemies)
 	var weapon: Weapon = null
 	if (item != null):
 		if (item is Weapon):

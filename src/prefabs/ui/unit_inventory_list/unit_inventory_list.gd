@@ -22,7 +22,13 @@ func _clear_items() -> void:
 		child.queue_free()
 		_vbox.remove_child(child)
 
-func select_item(unit: Unit, can_use_only: bool = false, weapon_only: bool = false) -> Item:
+func select_item(
+	unit: Unit, 
+	can_use_only: bool = false, 
+	weapon_only: bool = false, 
+	from: Vector2i = Vector2i(0,0), 
+	enemies: Array[Unit]= []
+) -> Item:
 	var focused: bool = false
 	items = unit.character.inventory
 	

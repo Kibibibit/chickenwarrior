@@ -9,28 +9,28 @@
 [ext_resource type="Resource" uid="uid://de2cga6x2e5cr" path="res://resources/characters/player/test_alice.tres" id="9_h38tm"]
 [ext_resource type="Resource" uid="uid://wsm0q68n174f" path="res://resources/characters/enemy/test_lisa.tres" id="10_cg0gy"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bayox"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqfwa"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 0
 shader_parameter/moved = false
 shader_parameter/outline = 2
 shader_parameter/outline_alpha = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ceqcg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c6iim"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 1
 shader_parameter/moved = false
 shader_parameter/outline = 2
 shader_parameter/outline_alpha = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xxe3n"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j0wi7"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 0
 shader_parameter/moved = false
 shader_parameter/outline = 2
 shader_parameter/outline_alpha = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ifhx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cf7o8"]
 shader = ExtResource("4_84i1k")
 shader_parameter/player = 1
 shader_parameter/moved = false
@@ -50,14 +50,14 @@ script = ExtResource("2_h3isd")
 z_index = 10
 
 [node name="TestSteve" parent="Units" instance=ExtResource("2_je2jo")]
-material = SubResource("ShaderMaterial_bayox")
+material = SubResource("ShaderMaterial_bqfwa")
 position = Vector2(544, 480)
 character = ExtResource("3_a0t6i")
 tile = Vector2i(17, 15)
 hp = 28
 
 [node name="TestBob" parent="Units" instance=ExtResource("2_je2jo")]
-material = SubResource("ShaderMaterial_ceqcg")
+material = SubResource("ShaderMaterial_c6iim")
 position = Vector2(576, 576)
 character = ExtResource("7_x2vwp")
 team = 1
@@ -65,14 +65,14 @@ tile = Vector2i(18, 18)
 hp = 27
 
 [node name="TestAlice" parent="Units" instance=ExtResource("2_je2jo")]
-material = SubResource("ShaderMaterial_xxe3n")
+material = SubResource("ShaderMaterial_j0wi7")
 position = Vector2(512, 480)
 character = ExtResource("9_h38tm")
 tile = Vector2i(16, 15)
 hp = 28
 
 [node name="TestLisa" parent="Units" instance=ExtResource("2_je2jo")]
-material = SubResource("ShaderMaterial_2ifhx")
+material = SubResource("ShaderMaterial_cf7o8")
 position = Vector2(512, 576)
 character = ExtResource("10_cg0gy")
 team = 1

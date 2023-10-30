@@ -150,8 +150,17 @@ func _action_selected(action: int) -> void:
 		unit.highlight()
 		battle_state = STATE_PLAYER_UNIT_SELECTED
 
+
+
 func _attack_action_selected(unit: Unit) -> void:
-	var weapon: Weapon = await ui.show_weapon_list(unit)
+	var min_range: int = unit.get_weapon_ranges().x
+	var max_range: int = unit.get_weapon_ranges().y
+	var enemies: Array[Unit] = []
+	for u in units.values():
+		if (u.team == Teams.ENEMY):
+			enemies.append(u)
+	
+	var weapon: Weapon = await ui.show_weapon_list(unit, cursor.tile, enemies)
 	if (weapon == null):
 		_unit_move_finished(unit)
 		return
